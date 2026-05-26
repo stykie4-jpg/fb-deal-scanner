@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currently Selling — Two Wheels</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; line-height: 1.5; }
+
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-bottom: 1px solid #00ff8822; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 22px; font-weight: 800; background: linear-gradient(90deg, #00ff88, #00cc6a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 12px; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 13px; padding: 6px 14px; border: 1px solid #2a2a3a; border-radius: 6px; }
+  .nav-links a:hover { color: #00d4ff; border-color: #00d4ff44; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px; }
+
+  .summary { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
+  .sum-card { background: #111118; border: 1px solid #222232; border-radius: 10px; padding: 16px; }
+  .sum-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; }
+  .sum-val { font-size: 22px; font-weight: 700; margin-top: 6px; }
+  .sum-val.green { color: #00ff88; }
+  .sum-val.gold { color: #ffd700; }
+  .sum-val.blue { color: #00d4ff; }
+  .sum-val.red { color: #ff6b6b; }
+
+  .bike-card { background: #111118; border: 1px solid #222232; border-radius: 14px; margin-bottom: 24px; overflow: hidden; }
+  .bike-card.p1 { border-color: #00ff8866; box-shadow: 0 0 20px #00ff8811; }
+  .bike-card.p2 { border-color: #00d4ff44; }
+  .bike-head { padding: 20px 24px; border-bottom: 1px solid #1a1a2a; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .bike-name { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .bike-tag { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 6px; }
+  .tag-p1 { background: #00ff8822; color: #00ff88; border: 1px solid #00ff8844; }
+  .tag-p2 { background: #00d4ff22; color: #00d4ff; border: 1px solid #00d4ff44; }
+  .tag-p3 { background: #ffd70022; color: #ffd700; border: 1px solid #ffd70044; }
+  .tag-blocked { background: #ff444422; color: #ff6666; border: 1px solid #ff444444; }
+  .tag-premium { background: #9945ff22; color: #c8a8ff; border: 1px solid #9945ff44; }
+  .bike-price { text-align: right; }
+  .price-big { font-size: 30px; font-weight: 800; color: #00ff88; }
+  .price-label { font-size: 11px; color: #666; }
+  .price-floor { font-size: 12px; color: #888; margin-top: 4px; }
+
+  /* Profit math box — the star of the show */
+  .profit-box { background: linear-gradient(135deg, #001a14 0%, #002a14 100%); border: 1px solid #00ff8844; border-radius: 12px; padding: 18px; margin: 18px 24px; }
+  .profit-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+  .profit-cell { text-align: center; padding: 8px; }
+  .profit-cell-label { font-size: 10px; text-transform: uppercase; color: #666; letter-spacing: 0.8px; font-weight: 700; }
+  .profit-cell-value { font-size: 20px; font-weight: 800; margin-top: 4px; }
+  .profit-cell-sub { font-size: 11px; color: #555; margin-top: 2px; }
+  .profit-cell.cost .profit-cell-value { color: #ff8c00; }
+  .profit-cell.ask .profit-cell-value { color: #00d4ff; }
+  .profit-cell.sweet .profit-cell-value { color: #ffd700; }
+  .profit-cell.floor .profit-cell-value { color: #00ff88; }
+  .profit-divider { border-right: 1px solid #00ff8822; }
+
+  .backstory { background: #0d0d14; border-left: 3px solid #c8a8ff; padding: 12px 18px; margin: 0 24px 18px; border-radius: 6px; font-size: 13px; color: #aaa; line-height: 1.7; }
+  .backstory strong { color: #c8a8ff; }
+
+  .bike-body { padding: 24px; padding-top: 0; }
+  .section-title { font-size: 12px; font-weight: 700; color: #00d4ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .section { margin-bottom: 24px; }
+
+  .day-grid { display: grid; grid-template-columns: 90px 1fr 100px 90px; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1a1a2a; align-items: center; }
+  .day-grid:last-child { border-bottom: none; }
+  .day-num { font-weight: 800; color: #ffd700; font-size: 14px; }
+  .day-text { font-size: 13px; color: #ccc; }
+  .day-price { text-align: right; color: #00d4ff; font-weight: 700; font-size: 14px; }
+  .day-profit { text-align: right; color: #00ff88; font-weight: 700; font-size: 14px; }
+  .day-grid.header { background: #0d0d14; padding: 8px 0; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; }
+  .day-grid.header > div { color: #555 !important; font-weight: 600; }
+
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0; border-bottom: 1px solid #1a1a2a; color: #ccc; font-size: 14px; display: flex; gap: 10px; }
+  .checklist li::before { content: '▸'; color: #00d4ff; flex-shrink: 0; }
+  .checklist li:last-child { border-bottom: none; }
+
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .platform { background: #0d0d14; border: 1px solid #222232; border-radius: 8px; padding: 12px; }
+  .platform-name { font-weight: 700; color: #00d4ff; font-size: 13px; margin-bottom: 4px; }
+  .platform-desc { font-size: 12px; color: #777; }
+
+  .copy-box { background: #0d0d14; border: 1px dashed #00d4ff44; border-radius: 8px; padding: 14px; font-family: ui-monospace, monospace; font-size: 13px; color: #00d4ff; cursor: text; user-select: all; }
+
+  .warning { background: #1a1200; border-left: 3px solid #ffd700; padding: 12px 16px; border-radius: 6px; color: #ffe680; font-size: 13px; margin-top: 12px; }
+  .info { background: #001a33; border-left: 3px solid #00d4ff; padding: 12px 16px; border-radius: 6px; color: #aee4ff; font-size: 13px; margin-top: 12px; }
+  .danger { background: #1a0a0a; border-left: 3px solid #ff4444; padding: 12px 16px; border-radius: 6px; color: #ff9999; font-size: 13px; margin-top: 12px; }
+
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+  .spec { background: #0d0d14; border-radius: 6px; padding: 10px 12px; }
+  .spec-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.6px; }
+  .spec-value { font-size: 13px; color: #e0e0e0; font-weight: 600; margin-top: 2px; }
+
+  .priority-banner { background: linear-gradient(90deg, #00ff8822, transparent); padding: 8px 24px; font-size: 12px; font-weight: 700; color: #00ff88; letter-spacing: 1px; }
+  .priority-banner.p2 { background: linear-gradient(90deg, #00d4ff22, transparent); color: #00d4ff; }
+  .priority-banner.p3 { background: linear-gradient(90deg, #ffd70022, transparent); color: #ffd700; }
+  .priority-banner.p4 { background: linear-gradient(90deg, #9945ff22, transparent); color: #c8a8ff; }
+
+  /* Past Flips — quick-add form + history */
+  .flips { background: #111118; border: 1px solid #ffd70044; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+  .flips-title { font-size: 14px; font-weight: 800; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .flips-sub { font-size: 12px; color: #666; margin-bottom: 18px; }
+  .flips-form { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 8px; margin-bottom: 20px; }
+  .flips-form input { background: #0d0d14; border: 1px solid #2a2a3a; border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13px; font-family: inherit; }
+  .flips-form input:focus { outline: none; border-color: #ffd700; }
+  .flips-form input::placeholder { color: #444; }
+  .flips-form button { background: linear-gradient(135deg, #ffd700, #ffb800); color: #000; border: none; border-radius: 8px; padding: 10px 18px; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .flips-form button:hover { filter: brightness(1.1); }
+  .flips-total { background: #1a1200; border-left: 3px solid #ffd700; padding: 12px 16px; border-radius: 6px; color: #ffe680; font-size: 14px; margin-bottom: 16px; }
+  .flips-list { display: grid; gap: 6px; }
+  .flip-row { display: grid; grid-template-columns: 2fr 80px 80px 80px 90px 30px; gap: 12px; padding: 10px 12px; background: #0d0d14; border-radius: 6px; align-items: center; font-size: 13px; }
+  .flip-title { color: #e0e0e0; }
+  .flip-buy { color: #ff8c00; font-family: ui-monospace, monospace; text-align: right; }
+  .flip-sold { color: #00d4ff; font-family: ui-monospace, monospace; text-align: right; }
+  .flip-profit { color: #00ff88; font-family: ui-monospace, monospace; text-align: right; font-weight: 700; }
+  .flip-date { color: #555; font-size: 11px; text-align: right; }
+  .flip-del { color: #444; cursor: pointer; text-align: center; font-size: 14px; }
+  .flip-del:hover { color: #ff6b6b; }
+  .flip-header { display: grid; grid-template-columns: 2fr 80px 80px 80px 90px 30px; gap: 12px; padding: 0 12px 6px; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.6px; }
+  .flip-header > div:nth-child(n+2) { text-align: right; }
+
+  /* Listings Hub — open every platform per bike */
+  .hub { background: #111118; border: 1px solid #00d4ff44; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+  .hub-title { font-size: 14px; font-weight: 800; color: #00d4ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .hub-sub { font-size: 12px; color: #666; margin-bottom: 18px; }
+  .hub-bike { border-top: 1px solid #1a1a2a; padding: 16px 0; }
+  .hub-bike:first-of-type { border-top: none; padding-top: 4px; }
+  .hub-bike-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .hub-bike-ask { color: #00d4ff; font-size: 13px; font-weight: 700; font-family: ui-monospace, monospace; }
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .hub-btn { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #0d0d14; border: 1px solid #222232; border-radius: 8px; padding: 10px 12px; text-decoration: none; color: #ccc; font-size: 12px; transition: all 0.15s; cursor: pointer; }
+  .hub-btn:hover { border-color: #00d4ff66; background: #001a26; color: #fff; }
+  .hub-btn.empty { border-style: dashed; border-color: #2a2a3a; color: #555; }
+  .hub-btn.empty:hover { border-color: #ffd70066; color: #ffd700; }
+  .hub-btn .platform-label { flex: 1; }
+  .hub-btn .platform-icon { font-size: 14px; }
+  .hub-btn .edit-pencil { color: #444; font-size: 11px; padding: 2px 4px; border-radius: 4px; }
+  .hub-btn .edit-pencil:hover { background: #1a1a2a; color: #00d4ff; }
+
+  /* Master scenario table */
+  .scenario { background: #111118; border: 1px solid #222232; border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+  .scenario-title { font-size: 14px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .scenario-table { width: 100%; border-collapse: collapse; }
+  .scenario-table th { text-align: left; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; padding: 10px; border-bottom: 1px solid #1a1a2a; }
+  .scenario-table th.num { text-align: right; }
+  .scenario-table td { padding: 12px 10px; border-bottom: 1px solid #15151f; font-size: 13px; }
+  .scenario-table td.num { text-align: right; font-weight: 700; font-family: ui-monospace, monospace; }
+  .scenario-table tr.total { background: #002a14; }
+  .scenario-table tr.total td { font-weight: 800; color: #00ff88; font-size: 14px; padding: 14px 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">💸 CURRENTLY SELLING</div>
+    <div style="font-size:12px;color:#444;margin-top:4px;">Real cost basis · Real profit math · Updates the main dashboard</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">← Dashboard</a>
+    <a href="/assignments">🎯 Assignments</a>
+    <a href="/plan">📋 Plan</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="summary">
+    <div class="sum-card">
+      <div class="sum-label">Bikes</div>
+      <div class="sum-val blue">{{ bike_count }}</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Total Cost Basis</div>
+      <div class="sum-val" style="color:#ff8c00;">${{ "{:,}".format(total_in) }}</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Total Asking</div>
+      <div class="sum-val blue">${{ "{:,}".format(total_ask) }}</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Max Profit (all at ask)</div>
+      <div class="sum-val green">${{ "{:,}".format(potential_profit) }}</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Blocked</div>
+      <div class="sum-val red" style="font-size:14px;padding-top:8px;">Talaria<br><span style="font-size:11px;color:#888;">brakes + pegs</span></div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LISTINGS HUB — one click to every platform per bike -->
+  <!-- ============================================================ -->
+  <div class="hub">
+    <div class="hub-title">🔗 Listings Hub — Open Every Platform Per Bike</div>
+    <div class="hub-sub">Click a platform to jump straight to that bike's listing. Click <strong>+ Add</strong> on an empty slot to paste the URL.</div>
+    {% for bike in bikes %}
+    <div class="hub-bike">
+      <div class="hub-bike-name">
+        <span>{{ bike.title }}</span>
+        <span class="hub-bike-ask">Ask ${{ "{:,}".format(bike.ask_price) }}</span>
+      </div>
+      <div class="hub-grid">
+        {% for key, label in PLATFORM_LABELS.items() %}
+          {% if key in (bike.listings or {}) %}
+            {% set url = bike.listings.get(key, '') %}
+            {% if url %}
+              <a class="hub-btn" href="{{ url }}" target="_blank" rel="noopener" title="{{ url }}">
+                <span class="platform-label">{{ label }}</span>
+                <span class="edit-pencil" onclick="event.preventDefault();event.stopPropagation();editUrl('{{ bike.id }}','{{ key }}','{{ url|e }}')">✎</span>
+              </a>
+            {% else %}
+              <a class="hub-btn empty" href="{{ PLATFORM_HOMES.get(key, '#') }}" target="_blank" rel="noopener" onclick="if(confirm('Open {{ label }} home page to find/create this listing?\n\nClick CANCEL to instead paste the URL of an existing listing.')){return true;}else{event.preventDefault();editUrl('{{ bike.id }}','{{ key }}','');return false;}">
+                <span class="platform-label">+ {{ label }}</span>
+                <span class="edit-pencil">✎</span>
+              </a>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function editUrl(bikeId, platform, current) {
+      const url = prompt('Paste the ' + platform + ' URL for this bike (blank to clear):', current || '');
+      if (url === null) return;
+      fetch('/api/listing-url', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({bike_id: bikeId, platform: platform, url: url.trim()})
+      }).then(r => r.json()).then(d => {
+        if (d.ok) location.reload();
+        else alert('Save failed: ' + (d.error || 'unknown'));
+      }).catch(e => alert('Network error: ' + e));
+    }
+  </script>
+
+  <!-- ============================================================ -->
+  <!-- MASTER SCENARIO TABLE — shows total profit at each price level -->
+  <!-- ============================================================ -->
+  <div class="scenario">
+    <div class="scenario-title">📊 Profit Scenarios — All 4 Bikes</div>
+    <table class="scenario-table">
+      <thead>
+        <tr>
+          <th>Bike</th>
+          <th class="num">Cost In</th>
+          <th class="num">Ask</th>
+          <th class="num">Sweet Spot</th>
+          <th class="num">Floor</th>
+          <th class="num">Profit @ Ask</th>
+          <th class="num">Profit @ Floor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024 Sur Ron LBX</td>
+          <td class="num" style="color:#ff8c00;">$2,000</td>
+          <td class="num" style="color:#00d4ff;">$3,500</td>
+          <td class="num" style="color:#ffd700;">$3,200</td>
+          <td class="num" style="color:#888;">$2,800</td>
+          <td class="num" style="color:#00ff88;">+$1,500</td>
+          <td class="num" style="color:#666;">+$800</td>
+        </tr>
+        <tr>
+          <td>2005 Yamaha R6</td>
+          <td class="num" style="color:#ff8c00;">$2,100</td>
+          <td class="num" style="color:#00d4ff;">$4,800</td>
+          <td class="num" style="color:#ffd700;">$4,500</td>
+          <td class="num" style="color:#888;">$4,000</td>
+          <td class="num" style="color:#00ff88;">+$2,700</td>
+          <td class="num" style="color:#666;">+$1,900</td>
+        </tr>
+        <tr>
+          <td>2024 Talaria MX4 (3k mi)</td>
+          <td class="num" style="color:#ff8c00;">$2,300</td>
+          <td class="num" style="color:#00d4ff;">$3,400</td>
+          <td class="num" style="color:#ffd700;">$3,200</td>
+          <td class="num" style="color:#888;">$3,000</td>
+          <td class="num" style="color:#00ff88;">+$1,100</td>
+          <td class="num" style="color:#666;">+$700</td>
+        </tr>
+        <tr>
+          <td>2025 Razor Stage 2 M2</td>
+          <td class="num" style="color:#ff8c00;">$2,000</td>
+          <td class="num" style="color:#00d4ff;">$3,900</td>
+          <td class="num" style="color:#ffd700;">$3,600</td>
+          <td class="num" style="color:#888;">$3,200</td>
+          <td class="num" style="color:#00ff88;">+$1,900</td>
+          <td class="num" style="color:#666;">+$1,200</td>
+        </tr>
+        <tr class="total">
+          <td>TOTALS</td>
+          <td class="num">$8,400</td>
+          <td class="num">$15,600</td>
+          <td class="num">$14,500</td>
+          <td class="num">$13,000</td>
+          <td class="num">+$7,200</td>
+          <td class="num">+$4,600</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info" style="margin-top:16px;">
+      <strong>Realistic outcome:</strong> sell everything at sweet-spot → <strong style="color:#00ff88;">+$6,100 profit</strong> across 4 bikes. Worst case (every bike at floor) → <strong style="color:#ffd700;">+$4,600 profit</strong>. Best case (all at ask) → <strong style="color:#00ff88;">+$7,200 profit</strong>.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PRIORITY 1: SUR RON LBX -->
+  <!-- ============================================================ -->
+  <div class="bike-card p1">
+    <div class="priority-banner">★ PRIORITY 1 — EASIEST SELL · MOVE FIRST</div>
+    <div class="bike-head">
+      <div>
+        <div class="bike-name">2024 Sur Ron Light Bee X</div>
+        <div style="color:#888;font-size:13px;margin-bottom:8px;">1,200 mi · Runs perfect · 5 upgrades</div>
+        <span class="bike-tag tag-p1">🔥 Sell First</span>
+        <span class="bike-tag tag-p1">Strongest brand demand</span>
+      </div>
+      <div class="bike-price">
+        <div class="price-big">$3,500</div>
+        <div class="price-label">Day 1 Ask (dropped from $3,800)</div>
+        <div class="price-floor">Floor: $2,800 · Sweet spot: $3,200</div>
+      </div>
+    </div>
+
+    <div class="backstory">
+      <strong>Backstory:</strong> Half of the $4k LBX + Razor combo deal. Traded the upgraded Sur Ron Ultra Bee (was planning to sell for $5,000–$5,700) for this LBX + the Razor Stage 2 M2 combined. <strong>Cost basis: $2,000.</strong>
+    </div>
+
+    <div class="profit-box">
+      <div class="profit-row">
+        <div class="profit-cell cost profit-divider">
+          <div class="profit-cell-label">Cost In</div>
+          <div class="profit-cell-value">$2,000</div>
+          <div class="profit-cell-sub">half of LBX+Razor combo</div>
+        </div>
+        <div class="profit-cell ask profit-divider">
+          <div class="profit-cell-label">At Ask</div>
+          <div class="profit-cell-value">+$1,500</div>
+          <div class="profit-cell-sub">$3,500 sale</div>
+        </div>
+        <div class="profit-cell sweet profit-divider">
+          <div class="profit-cell-label">At Sweet Spot</div>
+          <div class="profit-cell-value">+$1,200</div>
+          <div class="profit-cell-sub">$3,200 sale</div>
+        </div>
+        <div class="profit-cell floor">
+          <div class="profit-cell-label">At Floor</div>
+          <div class="profit-cell-value">+$800</div>
+          <div class="profit-cell-sub">$2,800 sale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bike-body">
+
+      <div class="section">
+        <div class="section-title">📋 Your Bike</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-label">Year</div><div class="spec-value">2024</div></div>
+          <div class="spec"><div class="spec-label">Miles</div><div class="spec-value">1,200</div></div>
+          <div class="spec"><div class="spec-label">Condition</div><div class="spec-value">Like new, runs flawless</div></div>
+          <div class="spec"><div class="spec-label">Upgrades</div><div class="spec-value">Headlight · Guts seat · Wrap · Odi plate · Foot pegs</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 Realistic Pricing (Current Market)</div>
+        <div class="info">
+          Stock 2024 LBX in DMV is moving at <strong>$3,000–$4,000</strong> right now. Your upgrades are <strong>cosmetic (wrap, plate, seat, pegs, headlight)</strong>, not drivetrain — so they add $200–400 not $1,000.<br><br>
+          Realistic ask: <strong style="color:#00ff88;">$3,500</strong>. You'll get $3,200–$3,500. <strong>Don't chase $4,200 — the market isn't there.</strong>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📸 Fix the Photos First</div>
+        <ul class="checklist">
+          <li>Current shot is against a wooden fence on mulch — looks like a quick yard shot</li>
+          <li>Re-shoot at golden hour on clean pavement, 8 photos total</li>
+          <li>Close-ups of EACH upgrade: Guts seat, Odi plate, foot pegs, headlight, wrap</li>
+          <li>Last photo: clean shot of title</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 New Title + Description</div>
+        <div style="margin-bottom:10px;color:#888;font-size:12px;">TITLE:</div>
+        <div class="copy-box">2024 Sur Ron LBX — 1,200 mi — Upgraded — Clean — Cash</div>
+        <div style="margin-top:14px;margin-bottom:10px;color:#888;font-size:12px;">DESCRIPTION:</div>
+        <div class="copy-box" style="white-space:pre-wrap;line-height:1.6;">2024 Sur Ron Light Bee X — 1,200 miles. Runs flawless, zero issues, always maintained.
+
+UPGRADES:
+• Upgraded headlight
+• Guts seat cover
+• Custom wrap
+• Odi number plate
+• Aftermarket foot pegs
+
+Clean title in hand. Stock charger and key included. Indoor stored.
+
+Cash only, in-person pickup. Not shipping. Serious buyers — come look, bring cash, close today.
+
+DC / NoVA / MD.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💰 7-Day Price Drop (with Profit @ Each)</div>
+        <div class="day-grid header"><div>Day</div><div>Action</div><div>Price</div><div>Profit</div></div>
+        <div class="day-grid"><div class="day-num">Day 1–2</div><div class="day-text">Launch ask. Filter lowballers.</div><div class="day-price">$3,500</div><div class="day-profit">+$1,500</div></div>
+        <div class="day-grid"><div class="day-num">Day 3</div><div class="day-text">First drop if no serious offers.</div><div class="day-price">$3,300</div><div class="day-profit">+$1,300</div></div>
+        <div class="day-grid"><div class="day-num">Day 5</div><div class="day-text">Aggressive drop. Cross-post wave.</div><div class="day-price">$3,100</div><div class="day-profit">+$1,100</div></div>
+        <div class="day-grid"><div class="day-num">Day 7</div><div class="day-text">Floor. Any cash offer.</div><div class="day-price">$2,800</div><div class="day-profit">+$800</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🌐 Cross-Post Today</div>
+        <div class="platform-grid">
+          <div class="platform"><div class="platform-name">FB Marketplace</div><div class="platform-desc">Refresh + drop to $3,500</div></div>
+          <div class="platform"><div class="platform-name">Craigslist DC</div><div class="platform-desc">motorcycles section</div></div>
+          <div class="platform"><div class="platform-name">OfferUp</div><div class="platform-desc">Separate pool</div></div>
+          <div class="platform"><div class="platform-name">r/Surron</div><div class="platform-desc">[FS] 2024 LBX — DMV</div></div>
+          <div class="platform"><div class="platform-name">FB: Sur Ron Owners USA</div><div class="platform-desc">Best buyers</div></div>
+          <div class="platform"><div class="platform-name">FB: DMV E-Moto</div><div class="platform-desc">Local pool</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💬 Reply Templates</div>
+        <div style="color:#888;font-size:12px;margin-bottom:8px;">FOR LOWBALLERS (under $2,800):</div>
+        <div class="copy-box">Thanks but firm at $3,200 — there's room from there if you're serious. Come look.</div>
+        <div style="color:#888;font-size:12px;margin:14px 0 8px;">FOR SERIOUS BUYERS:</div>
+        <div class="copy-box">Still available, clean title, runs perfect. Free this weekend — bring cash and we close today.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PRIORITY 2: 2005 R6 -->
+  <!-- ============================================================ -->
+  <div class="bike-card p2">
+    <div class="priority-banner p2">★ PRIORITY 2 — SPORTBIKE SEASON · BIGGEST PROFIT BIKE</div>
+    <div class="bike-head">
+      <div>
+        <div class="bike-name">2005 Yamaha YZF-R6</div>
+        <div style="color:#888;font-size:13px;margin-bottom:8px;">35k mi · Clean title · Stock · Carefully maintained</div>
+        <span class="bike-tag tag-p2">Priced correctly</span>
+        <span class="bike-tag tag-p2">Needs more photos</span>
+      </div>
+      <div class="bike-price">
+        <div class="price-big" style="color:#00d4ff;">$4,800</div>
+        <div class="price-label">Current Ask — Hold It</div>
+        <div class="price-floor">Floor: $4,000 · Sweet spot: $4,500</div>
+      </div>
+    </div>
+
+    <div class="backstory">
+      <strong>Backstory:</strong> Bought the DRZ400 for $2,900 → traded it for this R6 PLUS $800 cash back. Net cost: $2,900 − $800 = <strong>$2,100 in</strong>. Even at floor of $4,000, you're netting <strong>+$1,900 profit</strong> — this is the highest-margin bike in your stack.
+    </div>
+
+    <div class="profit-box">
+      <div class="profit-row">
+        <div class="profit-cell cost profit-divider">
+          <div class="profit-cell-label">Cost In</div>
+          <div class="profit-cell-value">$2,100</div>
+          <div class="profit-cell-sub">DRZ trade + $800 back</div>
+        </div>
+        <div class="profit-cell ask profit-divider">
+          <div class="profit-cell-label">At Ask</div>
+          <div class="profit-cell-value">+$2,700</div>
+          <div class="profit-cell-sub">$4,800 sale</div>
+        </div>
+        <div class="profit-cell sweet profit-divider">
+          <div class="profit-cell-label">At Sweet Spot</div>
+          <div class="profit-cell-value">+$2,400</div>
+          <div class="profit-cell-sub">$4,500 sale</div>
+        </div>
+        <div class="profit-cell floor">
+          <div class="profit-cell-label">At Floor</div>
+          <div class="profit-cell-value">+$1,900</div>
+          <div class="profit-cell-sub">$4,000 sale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bike-body">
+
+      <div class="section">
+        <div class="section-title">📋 Your Bike</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-label">Year</div><div class="spec-value">2005</div></div>
+          <div class="spec"><div class="spec-label">Miles</div><div class="spec-value">35,000</div></div>
+          <div class="spec"><div class="spec-label">Title</div><div class="spec-value">Clean ✅</div></div>
+          <div class="spec"><div class="spec-label">Mods</div><div class="spec-value">Stock</div></div>
+          <div class="spec"><div class="spec-label">Condition</div><div class="spec-value">Carefully maintained</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📸 The #1 Fix: More Photos</div>
+        <ul class="checklist">
+          <li><strong style="color:#ff6666;">You only have 2 photos.</strong> Buyers won't reply</li>
+          <li>Need 6–8: both sides full, front 3/4, rear 3/4, dash showing 35k, exhaust close-up, chain, tire tread</li>
+          <li>Cold-start video uploaded to listing = +30% reply rate</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 Better Description</div>
+        <div class="copy-box" style="white-space:pre-wrap;line-height:1.6;">2005 Yamaha R6 — 35,000 miles. Clean title in hand. Stock, carefully maintained, zero issues.
+
+Runs and rides flawless. Cold starts every time. Brakes/tires/chain all in good shape.
+
+Legendary pre-2006 R6 — high-revving inline 4, screams to 15,500 rpm. They don't make them like this anymore.
+
+Cash only, in-person. Test ride with cash in hand. No trades unless it's a truck. DC area.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💰 7-Day Price Drop (with Profit @ Each)</div>
+        <div class="day-grid header"><div>Day</div><div>Action</div><div>Price</div><div>Profit</div></div>
+        <div class="day-grid"><div class="day-num">Day 1–4</div><div class="day-text">Hold $4,800. Sportbike buyers shop slow.</div><div class="day-price">$4,800</div><div class="day-profit">+$2,700</div></div>
+        <div class="day-grid"><div class="day-num">Day 5</div><div class="day-text">Drop + bump.</div><div class="day-price">$4,500</div><div class="day-profit">+$2,400</div></div>
+        <div class="day-grid"><div class="day-num">Day 8</div><div class="day-text">Floor. Cash takes it.</div><div class="day-price">$4,000</div><div class="day-profit">+$1,900</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🌐 Cross-Post</div>
+        <div class="platform-grid">
+          <div class="platform"><div class="platform-name">FB Marketplace</div><div class="platform-desc">Already there — add photos</div></div>
+          <div class="platform"><div class="platform-name">Craigslist DC</div><div class="platform-desc">motorcycles/scooters</div></div>
+          <div class="platform"><div class="platform-name">Cycle Trader</div><div class="platform-desc">Best for sportbikes</div></div>
+          <div class="platform"><div class="platform-name">OfferUp</div><div class="platform-desc">Free second listing</div></div>
+          <div class="platform"><div class="platform-name">FB: DMV Motorcycles</div><div class="platform-desc">Local</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💬 Reply Templates</div>
+        <div style="color:#888;font-size:12px;margin-bottom:8px;">FOR "WILL YOU TAKE $3,500?":</div>
+        <div class="copy-box">No — $4,500 is the lowest. Plenty of R6s at $3,500 with double the miles or salvage titles.</div>
+        <div style="color:#888;font-size:12px;margin:14px 0 8px;">FOR "CAN I TEST RIDE?":</div>
+        <div class="copy-box">Test ride is fine once we agree on a price and you've shown me the cash. Bring license + helmet.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PRIORITY 3: TALARIA -->
+  <!-- ============================================================ -->
+  <div class="bike-card">
+    <div class="priority-banner p3">★ PRIORITY 3 — BLOCKED ON REPAIRS · INSTALL THEN SELL</div>
+    <div class="bike-head">
+      <div>
+        <div class="bike-name">2024 Talaria Sting R MX4</div>
+        <div style="color:#888;font-size:13px;margin-bottom:8px;">Heavily upgraded · Needs better brakes + footpegs</div>
+        <span class="bike-tag tag-p3">Repairs first</span>
+        <span class="bike-tag tag-blocked">Don't push yet</span>
+      </div>
+      <div class="bike-price">
+        <div class="price-big" style="color:#ffd700;">$3,400</div>
+        <div class="price-label">Current Ask (ceiling)</div>
+        <div class="price-floor">Sweet: $3,200 · Floor: $3,000</div>
+      </div>
+    </div>
+
+    <div class="backstory">
+      <strong>Backstory:</strong> Paid <strong>$2,200 cash</strong> for the Talaria + <strong>$100 in upgrades</strong> already installed (guts seat, headlight, plate, wrap, CF battery lid, pegs). <strong>Cost in: $2,300.</strong> Realistic sale range is <strong>$3,000–$3,400</strong> (3k miles caps it). Brakes + pegs (~$200) are needed to HOLD the $3,400 ask — not to push past it.
+    </div>
+
+    <div class="profit-box">
+      <div class="profit-row">
+        <div class="profit-cell cost profit-divider">
+          <div class="profit-cell-label">Cost In</div>
+          <div class="profit-cell-value">$2,300</div>
+          <div class="profit-cell-sub">$2,200 + $100 upgrades</div>
+        </div>
+        <div class="profit-cell ask profit-divider">
+          <div class="profit-cell-label">At Ask (ceiling)</div>
+          <div class="profit-cell-value">+$1,100</div>
+          <div class="profit-cell-sub">$3,400 sale</div>
+        </div>
+        <div class="profit-cell sweet profit-divider">
+          <div class="profit-cell-label">At Sweet Spot</div>
+          <div class="profit-cell-value">+$900</div>
+          <div class="profit-cell-sub">$3,200 sale</div>
+        </div>
+        <div class="profit-cell floor">
+          <div class="profit-cell-label">At Floor</div>
+          <div class="profit-cell-value">+$700</div>
+          <div class="profit-cell-sub">$3,000 sale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bike-body">
+
+      <div class="section">
+        <div class="section-title">🛠 Pre-Sale TODO</div>
+        <ul class="checklist">
+          <li><strong style="color:#ffd700;">Install upgraded brakes</strong> — required to hold $3,400 ask (buyers will negotiate $200+ off without)</li>
+          <li><strong style="color:#ffd700;">Install upgraded footpegs</strong> — already mentioned in listing, swap to better ones</li>
+          <li>Re-shoot photos in DAYLIGHT (current gas-station photo is dark)</li>
+          <li>Re-list at $3,400 with full upgrade list</li>
+        </ul>
+        <div class="warning">
+          💡 3k miles caps the realistic ceiling at $3,400 regardless of upgrades. The brakes/pegs spend ($200) protects the $3,400 ask from getting beat down to $3,000.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📋 Current Specs</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-label">Year</div><div class="spec-value">2024</div></div>
+          <div class="spec"><div class="spec-label">Model</div><div class="spec-value">Sting R MX4</div></div>
+          <div class="spec"><div class="spec-label">Condition</div><div class="spec-value">Like new, no problems</div></div>
+          <div class="spec"><div class="spec-label">Existing Upgrades</div><div class="spec-value">Guts seat · Headlight · Plate · Wrap · CF battery lid · Pegs</div></div>
+          <div class="spec"><div class="spec-label">To Install</div><div class="spec-value">Brakes · Better pegs</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 Sequence</div>
+        <div class="info">
+          Wait until <strong>Sur Ron + R6 are sold</strong>. Then:<br>
+          1. Install brakes + footpegs (parts ~$200, 2–3 hrs labor)<br>
+          2. Re-shoot photos in daylight (current night shot is killing the listing)<br>
+          3. Re-list at $3,400 with full upgrade list<br>
+          4. Sweet $3,200 · Floor $3,000
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 Post-Upgrade Description (Save for Later)</div>
+        <div class="copy-box" style="white-space:pre-wrap;line-height:1.6;">2024 Talaria Sting R MX4 — like-new, no issues, always maintained.
+
+LOADED WITH UPGRADES:
+• Upgraded brakes (NEW)
+• Upgraded footpegs (NEW)
+• Guts seat cover
+• Upgraded headlight
+• Custom number plate
+• Battery wrap
+• Carbon fiber battery lid
+
+Clean title. Cash only, in-person. DC/NoVA/MD.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PRIORITY 4: RAZOR STAGE 2 M2 -->
+  <!-- ============================================================ -->
+  <div class="bike-card">
+    <div class="priority-banner p4">★ PRIORITY 4 — PREMIUM 72V BUILD · HARDER SELL DESPITE HIGHER VALUE</div>
+    <div class="bike-head">
+      <div>
+        <div class="bike-name">2025 Razor Stage 2 M2 Ebike</div>
+        <div style="color:#888;font-size:13px;margin-bottom:8px;">Full-size 72V e-moto · 70+ mph · Competes with Storm Bee / Talaria XXX</div>
+        <span class="bike-tag tag-premium">⚡ Most Powerful</span>
+        <span class="bike-tag tag-p3">Highest ask of the 4</span>
+      </div>
+      <div class="bike-price">
+        <div class="price-big" style="color:#c8a8ff;">$3,900</div>
+        <div class="price-label">Current Ask — Fair</div>
+        <div class="price-floor">Floor: $3,200 · Sweet spot: $3,600</div>
+      </div>
+    </div>
+
+    <div class="backstory">
+      <strong>Backstory:</strong> Other half of the $4k LBX + Razor combo. You traded your upgraded Ultra Bee (worth $5–5.7k) for both bikes together. <strong>Cost basis on this one: $2,000.</strong> Even at floor of $3,200 that's still <strong>+$1,200 profit</strong>.
+    </div>
+
+    <div class="profit-box">
+      <div class="profit-row">
+        <div class="profit-cell cost profit-divider">
+          <div class="profit-cell-label">Cost In</div>
+          <div class="profit-cell-value">$2,000</div>
+          <div class="profit-cell-sub">half of LBX+Razor combo</div>
+        </div>
+        <div class="profit-cell ask profit-divider">
+          <div class="profit-cell-label">At Ask</div>
+          <div class="profit-cell-value">+$1,900</div>
+          <div class="profit-cell-sub">$3,900 sale</div>
+        </div>
+        <div class="profit-cell sweet profit-divider">
+          <div class="profit-cell-label">At Sweet Spot</div>
+          <div class="profit-cell-value">+$1,600</div>
+          <div class="profit-cell-sub">$3,600 sale</div>
+        </div>
+        <div class="profit-cell floor">
+          <div class="profit-cell-label">At Floor</div>
+          <div class="profit-cell-value">+$1,200</div>
+          <div class="profit-cell-sub">$3,200 sale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bike-body">
+
+      <div class="section">
+        <div class="section-title">📋 The Build</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-label">Year</div><div class="spec-value">2025</div></div>
+          <div class="spec"><div class="spec-label">Miles</div><div class="spec-value">800</div></div>
+          <div class="spec"><div class="spec-label">Battery</div><div class="spec-value">72V 45Ah</div></div>
+          <div class="spec"><div class="spec-label">Top Speed</div><div class="spec-value">70+ mph</div></div>
+          <div class="spec"><div class="spec-label">Brakes</div><div class="spec-value">Upgraded Shimano Deore</div></div>
+          <div class="spec"><div class="spec-label">Forks</div><div class="spec-value">Fast Ace</div></div>
+          <div class="spec"><div class="spec-label">Other</div><div class="spec-value">Upgraded headlight · Odi plate</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 Why This is #4 (Not About Quality)</div>
+        <div class="info">
+          <strong>Strongest spec'd e-moto in your stack.</strong> 72V 45Ah at 70+mph beats stock Sur Ron LBX (~46mph) and runs with Storm Bee / Talaria XXX.<br><br>
+          <strong>Market value:</strong> $3,500–$4,500. Your $3,900 is fair.<br><br>
+          It's last because <strong>brand recognition is the friction</strong> — buyers searching FB for "Razor" expect kid scooters. You need a buyer who shops spec sheets. That buyer exists but is rarer, so it takes longer.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📸 #1 Fix: KILL THE NIGHT PHOTO</div>
+        <div class="danger">
+          <strong>Your main photo is at night under a streetlight.</strong> A $3,900 bike CANNOT have a night photo as the lead image.
+        </div>
+        <ul class="checklist">
+          <li>Re-shoot in DAYLIGHT — golden hour, clean asphalt</li>
+          <li>8 photos: all angles + close-ups of 72V battery, Fast Ace forks, Deore brakes</li>
+          <li>Speedo video hitting 70+ mph — your differentiator vs Sur Ron</li>
+          <li>Parts receipts in one shot if you have them — justifies the price</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 Better Title + Description</div>
+        <div style="margin-bottom:10px;color:#888;font-size:12px;">TITLE:</div>
+        <div class="copy-box">2025 Stage 2 M2 — 72V 45Ah — 70+ MPH — Deore + Fast Ace — 800 mi</div>
+        <div style="margin-top:14px;margin-bottom:10px;color:#888;font-size:12px;">DESCRIPTION:</div>
+        <div class="copy-box" style="white-space:pre-wrap;line-height:1.6;">2025 Stage 2 M2 — full-size 72V e-moto, only 800 miles, excellent condition, zero problems.
+
+PREMIUM BUILD SPECS:
+• 72V 45Ah battery (massive range)
+• 70+ mph top speed
+• Upgraded Shimano Deore disc brakes
+• Fast Ace forks (premium suspension)
+• Upgraded headlight
+• Odi number plate
+
+Hits harder than a stock Sur Ron LBX and runs with Storm Bee / Talaria XXX. Build cost is north of the ask. Cross-shopping Sur Ron or Talaria? This is the spec-sheet winner at this price.
+
+Cash only, in-person, DC / NoVA / MD. Price slightly negotiable for cash today.
+
+#surron #talaria #eride #altis #79bike #rawrr #rtr #ebox #emoto</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💰 14-Day Price Drop (with Profit @ Each)</div>
+        <div class="day-grid header"><div>Day</div><div>Action</div><div>Price</div><div>Profit</div></div>
+        <div class="day-grid"><div class="day-num">Day 1–5</div><div class="day-text">Hold ask. Daylight photos doing the work.</div><div class="day-price">$3,900</div><div class="day-profit">+$1,900</div></div>
+        <div class="day-grid"><div class="day-num">Day 6–9</div><div class="day-text">Bump listing, no price change.</div><div class="day-price">$3,900</div><div class="day-profit">+$1,900</div></div>
+        <div class="day-grid"><div class="day-num">Day 10</div><div class="day-text">First drop.</div><div class="day-price">$3,600</div><div class="day-profit">+$1,600</div></div>
+        <div class="day-grid"><div class="day-num">Day 14</div><div class="day-text">Floor. Cash takes it.</div><div class="day-price">$3,200</div><div class="day-profit">+$1,200</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🌐 List Where E-Moto Cross-Shoppers Live</div>
+        <div class="platform-grid">
+          <div class="platform"><div class="platform-name">r/Surron</div><div class="platform-desc">"Stage 2 M2 — Sur Ron alternative"</div></div>
+          <div class="platform"><div class="platform-name">r/EMoto</div><div class="platform-desc">Exactly your buyer</div></div>
+          <div class="platform"><div class="platform-name">FB: Sur Ron Owners USA</div><div class="platform-desc">Pitch as alternative</div></div>
+          <div class="platform"><div class="platform-name">FB: Talaria Owners</div><div class="platform-desc">Same buyer pool</div></div>
+          <div class="platform"><div class="platform-name">FB: DMV E-Moto</div><div class="platform-desc">Local</div></div>
+          <div class="platform"><div class="platform-name">Electric Bike Forum</div><div class="platform-desc">classifieds section</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💬 Reply Templates</div>
+        <div style="color:#888;font-size:12px;margin-bottom:8px;">FOR "ISN'T RAZOR FOR KIDS?":</div>
+        <div class="copy-box">Stage 2 is a full-size 72V e-moto build — only the frame is Razor MX-platform. Everything else is upgraded: 72V 45Ah battery, custom controller, Deore brakes, Fast Ace forks. Hits 70+ mph. Same bracket as Storm Bee and Talaria XXX. Definitely not a kid bike.</div>
+        <div style="color:#888;font-size:12px;margin:14px 0 8px;">FOR "WHY MORE THAN A SUR RON?":</div>
+        <div class="copy-box">Stock Sur Ron LBX is ~46 mph on 60V. This is 70+ mph on 72V 45Ah with Deore brakes and Fast Ace forks — components alone are upgraded over an LBX. You're paying for the spec sheet.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PAST FLIPS — quick-add form + history -->
+  <!-- ============================================================ -->
+  <div class="flips">
+    <div class="flips-title">📜 Past Flips — Log Every Bike You've Sold</div>
+    <div class="flips-sub">Add any bike you've already flipped. Each one rolls into total profit on the main dashboard.</div>
+
+    <form class="flips-form" onsubmit="addFlip(event)">
+      <input id="flip-title" type="text" placeholder="e.g. 2022 KTM 250 SXF" required>
+      <input id="flip-buy" type="number" placeholder="Bought $" required>
+      <input id="flip-sold" type="number" placeholder="Sold $" required>
+      <input id="flip-date" type="text" placeholder="2025-08 (optional)">
+      <button type="submit">+ Add Flip</button>
+    </form>
+
+    <div class="flips-total">
+      <strong>Logged so far:</strong> {{ past_flips|length }} flip{{ '' if past_flips|length == 1 else 's' }} · Total profit <strong style="color:#00ff88;">${{ "{:,}".format(past_profit) }}</strong>
+    </div>
+
+    {% if past_flips %}
+    <div class="flip-header">
+      <div>Bike</div><div>Bought</div><div>Sold</div><div>Profit</div><div>Date</div><div></div>
+    </div>
+    <div class="flips-list">
+      {% for f in past_flips %}
+      <div class="flip-row">
+        <div class="flip-title">{{ f.title }}</div>
+        <div class="flip-buy">${{ "{:,}".format(f.buy_price or 0) }}</div>
+        <div class="flip-sold">${{ "{:,}".format(f.sold_price or 0) }}</div>
+        <div class="flip-profit">+${{ "{:,}".format((f.sold_price or 0) - (f.buy_price or 0)) }}</div>
+        <div class="flip-date">{{ (f.updated or '')[:10] }}</div>
+        <div class="flip-del" onclick="delFlip({{ f.id if f.id is number else 0 }}, '{{ f.title|e }}')" title="Delete">✕</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function addFlip(e) {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('flip-title').value,
+        buy_price: document.getElementById('flip-buy').value,
+        sold_price: document.getElementById('flip-sold').value,
+        date: document.getElementById('flip-date').value,
+      };
+      fetch('/api/past-flip', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      }).then(r => r.json()).then(d => {
+        if (d.ok) location.reload();
+        else alert('Failed: ' + (d.error || 'unknown'));
+      }).catch(err => alert('Network error: ' + err));
+    }
+    function delFlip(id, title) {
+      if (!id) { alert('This flip was added before the dashboard form existed — delete it in pipeline.json directly.'); return; }
+      if (!confirm('Delete "' + title + '"?')) return;
+      fetch('/api/past-flip/' + id, {method: 'DELETE'})
+        .then(r => r.json()).then(d => {
+          if (d.ok) location.reload();
+          else alert('Failed: ' + (d.error || 'unknown'));
+        });
+    }
+  </script>
+
+  <div style="text-align:center;color:#444;padding:24px;font-size:12px;">
+    Cost basis stored in <code>pipeline.json</code> · Edit there to update profit math · Main dashboard reads from same source
+  </div>
+
+</div>
+
+</body>
+</html>

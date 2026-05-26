@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Wheels — Business Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #080810;
+    color: #e0e0e0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #080810 0%, #0d0d20 60%, #0a1628 100%);
+    border-bottom: 1px solid #ffffff08;
+    padding: 64px 40px 56px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, #00d4ff18 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, #00ff8810 0%, transparent 60%);
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #00d4ff;
+    border: 1px solid #00d4ff33;
+    border-radius: 99px;
+    padding: 5px 14px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #fff 30%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: #555;
+    font-weight: 400;
+    margin-bottom: 32px;
+  }
+  .hero-stats {
+    display: inline-flex;
+    gap: 48px;
+    background: #ffffff06;
+    border: 1px solid #ffffff10;
+    border-radius: 16px;
+    padding: 20px 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-stat-val { font-size: 28px; font-weight: 800; color: #00ff88; }
+  .hero-stat-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #080810ee;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #ffffff0a;
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .nav-logo span { color: #00d4ff; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #00d4ff; }
+  .nav-back {
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid #222;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-back:hover { border-color: #00d4ff44; color: #00d4ff; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+  section { margin-bottom: 80px; }
+  .section-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #00d4ff;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  /* ── GOALS GRID ── */
+  .goals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .goal-card {
+    background: #0d0d18;
+    border: 1px solid #1a1a2a;
+    border-radius: 16px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .goal-card:hover { border-color: #00d4ff33; transform: translateY(-2px); }
+  .goal-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .goal-card.g { --c: #00ff88; }
+  .goal-card.b { --c: #00d4ff; }
+  .goal-card.y { --c: #ffd700; }
+  .goal-card.p { --c: #9945ff; }
+  .goal-card::after { background: var(--c); }
+  .goal-icon { font-size: 24px; margin-bottom: 12px; }
+  .goal-val { font-size: 26px; font-weight: 800; color: var(--c); margin-bottom: 4px; }
+  .goal-lbl { font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; }
+
+  /* ── AGENT CARDS ── */
+  .agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .agent-card {
+    background: #0d0d18;
+    border: 1px solid #1a1a2a;
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .agent-card:hover { border-color: #00ff8833; }
+  .agent-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: 14px;
+  }
+  .agent-status.live { background: #00ff8815; color: #00ff88; border: 1px solid #00ff8830; }
+  .agent-status.ready { background: #00d4ff15; color: #00d4ff; border: 1px solid #00d4ff30; }
+  .agent-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .agent-desc { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px; }
+  .agent-cmd {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #00ff88;
+    background: #00ff8808;
+    border: 1px solid #00ff8820;
+    border-radius: 6px;
+    padding: 6px 10px;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .month-card {
+    background: #0d0d18;
+    border: 1px solid #1a1a2a;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .month-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #1a1a2a;
+  }
+  .month-label { font-size: 11px; color: #555; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .month-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .month-target { font-size: 13px; font-weight: 700; }
+  .month-target.g { color: #00ff88; }
+  .month-target.b { color: #00d4ff; }
+  .month-target.y { color: #ffd700; }
+  .month-items { padding: 16px 24px; }
+  .month-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #666;
+    padding: 5px 0;
+    line-height: 1.5;
+  }
+  .month-item .dot { width: 6px; height: 6px; border-radius: 50%; background: #333; flex-shrink: 0; margin-top: 6px; }
+  .month-item.done { color: #00ff88; }
+  .month-item.done .dot { background: #00ff88; }
+  .month-item.todo { color: #888; }
+  .month-item.todo .dot { background: #444; border: 1px solid #555; }
+
+  /* ── SEARCH TERMS ── */
+  .terms-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .term-pill {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 1px solid;
+  }
+  .term-pill.electric { background: #001a1a; color: #00ff88; border-color: #00ff8830; }
+  .term-pill.dirt { background: #1a1000; color: #ffd700; border-color: #ffd70030; }
+  .term-pill.street { background: #10001a; color: #9945ff; border-color: #9945ff30; }
+  .term-pill.car { background: #001828; color: #00d4ff; border-color: #00d4ff30; }
+
+  /* ── PROFIT TABLE ── */
+  .profit-table { width: 100%; border-collapse: collapse; }
+  .profit-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #444;
+    padding: 12px 20px;
+    border-bottom: 1px solid #1a1a2a;
+  }
+  .profit-table td {
+    padding: 14px 20px;
+    font-size: 14px;
+    color: #888;
+    border-bottom: 1px solid #111118;
+  }
+  .profit-table tr:last-child td { border-bottom: none; }
+  .profit-table tr:hover td { background: #0d0d18; }
+  .profit-table td:last-child { color: #00ff88; font-weight: 700; }
+  .profit-table td:first-child { color: #e0e0e0; font-weight: 600; }
+
+  /* ── COMMANDS ── */
+  .cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cmd-block {
+    background: #0a0a14;
+    border: 1px solid #1a1a2a;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .cmd-title { font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .cmd-line {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #00ff88;
+    padding: 4px 0;
+    display: block;
+  }
+  .cmd-comment { color: #333; }
+
+  /* ── NEXT ACTIONS ── */
+  .actions-list { display: flex; flex-direction: column; gap: 12px; }
+  .action-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #0d0d18;
+    border: 1px solid #1a1a2a;
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: border-color 0.2s;
+  }
+  .action-item:hover { border-color: #00d4ff22; }
+  .action-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #00d4ff15;
+    border: 1px solid #00d4ff30;
+    color: #00d4ff;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .action-text { font-size: 14px; color: #aaa; line-height: 1.5; }
+  .action-text strong { color: #fff; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ffffff10 50%, transparent);
+    margin: 0 0 80px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid #0d0d18;
+    padding: 32px 40px;
+    text-align: center;
+    color: #333;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">TWO <span>WHEELS</span></div>
+  <div class="nav-links">
+    <a href="/">Dashboard</a>
+    <a href="/assignments">Assignments</a>
+    <a href="#goals">Goals</a>
+    <a href="#agents">Agents</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+  <a class="nav-back" href="/">← Dashboard</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">🏍️ Two Wheels · DC / VA / MD</div>
+  <h1>MASTER<br>BUSINESS PLAN</h1>
+  <div class="hero-sub">Summer 2026 · Road to $8k/month · USA's #1 Bike Marketplace</div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-val">$8K</div>
+      <div class="hero-stat-label">Monthly Goal</div>
+    </div>
+    <div style="width:1px;background:#ffffff10;"></div>
+    <div>
+      <div class="hero-stat-val">1–2</div>
+      <div class="hero-stat-label">Flips / Week</div>
+    </div>
+    <div style="width:1px;background:#ffffff10;"></div>
+    <div>
+      <div class="hero-stat-val">241</div>
+      <div class="hero-stat-label">Search Terms</div>
+    </div>
+    <div style="width:1px;background:#ffffff10;"></div>
+    <div>
+      <div class="hero-stat-val">60min</div>
+      <div class="hero-stat-label">Scan Interval</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- GOALS -->
+  <section id="goals">
+    <div class="section-tag">01 — The Mission</div>
+    <div class="section-title">What We're Building</div>
+    <div class="goals-grid">
+      <div class="goal-card g">
+        <div class="goal-icon">💰</div>
+        <div class="goal-val">$8,000</div>
+        <div class="goal-lbl">Monthly Profit</div>
+      </div>
+      <div class="goal-card b">
+        <div class="goal-icon">🔄</div>
+        <div class="goal-val">1–2</div>
+        <div class="goal-lbl">Flips Per Week</div>
+      </div>
+      <div class="goal-card y">
+        <div class="goal-icon">📈</div>
+        <div class="goal-val">$1k–$3k</div>
+        <div class="goal-lbl">Avg Profit / Flip</div>
+      </div>
+      <div class="goal-card p">
+        <div class="goal-icon">🌎</div>
+        <div class="goal-val">#1</div>
+        <div class="goal-lbl">US Bike Marketplace</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AGENTS -->
+  <section id="agents">
+    <div class="section-tag">02 — Your AI Stack</div>
+    <div class="section-title">Agents Running For You</div>
+    <div class="agents-grid">
+      <div class="agent-card">
+        <div class="agent-status live">● Live</div>
+        <div class="agent-name">FB Deal Scanner</div>
+        <div class="agent-desc">Scrapes 241 searches across bikes, cars, trucks, tools, outdoor power equipment, trailers, watercraft, UTVs, and ebike parts every 60 minutes. Browser auto-recovers if it crashes mid-scan.</div>
+        <div class="agent-cmd">python3 main.py --loop</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status live">● Live</div>
+        <div class="agent-name">Two-Stage AI Analyzer</div>
+        <div class="agent-desc">Stage 1: Haiku triage filters out obvious junk cheaply. Stage 2: Sonnet deep-analyzes survivors using your real profit rules, capital position, trade chains, and DMV market comps. ~$2/day total.</div>
+        <div class="agent-cmd">Runs inside scanner</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status live">● Live</div>
+        <div class="agent-name">Email Alerts (with Openers)</div>
+        <div class="agent-desc">Every deal scoring 5+ hits your inbox with: score, profit estimate, market value, red/green flags, a copy/paste opener message (no auto-sending — you control the message), urgency banner on 9+ deals, and trade-route hint when seller is open to trades.</div>
+        <div class="agent-cmd">→ stykie4@gmail.com</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status ready">◎ Ready</div>
+        <div class="agent-name">Deal Advisor</div>
+        <div class="agent-desc">Paste any listing — get a blunt buy/pass verdict with exact offer price, profit estimate, and opening message to send.</div>
+        <div class="agent-cmd">python3 advisor.py</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status ready">◎ Ready</div>
+        <div class="agent-name">Negotiator</div>
+        <div class="agent-desc">Paste the FB Messenger thread — it writes your next message. Handles the full deal: lowball → haggle → agree → schedule meetup.</div>
+        <div class="agent-cmd">python3 negotiator.py</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status ready">◎ Ready</div>
+        <div class="agent-name">Offer / Trade Evaluator</div>
+        <div class="agent-desc">Someone offering you money or a trade? Get an instant verdict: accept, counter, or hold — with the exact counter message written.</div>
+        <div class="agent-cmd">python3 advisor.py offer<br>python3 advisor.py trade</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status ready">◎ Ready</div>
+        <div class="agent-name">Pipeline Tracker</div>
+        <div class="agent-desc">Every deal tracked from lead to sold. See estimated profit per unit, total profit, days to flip. Dashboard pulls from this live.</div>
+        <div class="agent-cmd">python3 pipeline.py</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status ready">◎ Ready</div>
+        <div class="agent-name">Listing Generator</div>
+        <div class="agent-desc">Drop photos of a bike you own — it writes the Facebook Marketplace listing, eBay Motors listing, and Instagram caption. Post-ready in minutes.</div>
+        <div class="agent-cmd">python3 listing_generator.py</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-status live">● Live</div>
+        <div class="agent-name">This Dashboard</div>
+        <div class="agent-desc">Live command center — profit tracking, active pipeline with per-deal estimates, scanner status, recent deals found, and messages auto-sent.</div>
+        <div class="agent-cmd">http://localhost:5001</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="section-tag">03 — The Plan</div>
+    <div class="section-title">90-Day Roadmap</div>
+    <div class="roadmap">
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-label">Month 1 — Now</div>
+          <div class="month-title">Build the Machine</div>
+          <div class="month-target g">Target: $2k–$4k profit</div>
+        </div>
+        <div class="month-items">
+          <div class="month-item done"><span class="dot"></span>Scanner live 24/7</div>
+          <div class="month-item done"><span class="dot"></span>Two-stage AI analyzer (Haiku triage → Sonnet deep)</div>
+          <div class="month-item done"><span class="dot"></span>241 search terms across all reseller categories</div>
+          <div class="month-item done"><span class="dot"></span>Dashboard live</div>
+          <div class="month-item todo"><span class="dot"></span>Buy used Mac Mini M1 (~$400) after next $1,000 profit — 24/7 scanner at home, residential IP</div>
+          <div class="month-item todo"><span class="dot"></span>Build buyer SMS list — text every past inquiry</div>
+          <div class="month-item todo"><span class="dot"></span>Create @twowheels on Instagram + TikTok</div>
+          <div class="month-item todo"><span class="dot"></span>First flip logged in pipeline</div>
+        </div>
+      </div>
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-label">Month 2</div>
+          <div class="month-title">Multi-Channel</div>
+          <div class="month-target b">Target: $5k–$7k profit</div>
+        </div>
+        <div class="month-items">
+          <div class="month-item todo"><span class="dot"></span>Launch 2wheels.com (Claude builds it, inventory auto-syncs)</div>
+          <div class="month-item todo"><span class="dot"></span>Add eBay Motors — listing generator already writes them</div>
+          <div class="month-item todo"><span class="dot"></span>Daily TikTok: "bought for $X, sold for $Y in 48hrs"</div>
+          <div class="month-item todo"><span class="dot"></span>Expand radius: DC + Northern VA + Baltimore</div>
+          <div class="month-item todo"><span class="dot"></span>Consignment: sell others' bikes for 10–15% cut</div>
+        </div>
+      </div>
+      <div class="month-card">
+        <div class="month-header">
+          <div class="month-label">Month 3+</div>
+          <div class="month-title">Hit $8k & Scale</div>
+          <div class="month-target y">Target: $8k+/month</div>
+        </div>
+        <div class="month-items">
+          <div class="month-item todo"><span class="dot"></span>Hire part-time helper for pickups/deliveries</div>
+          <div class="month-item todo"><span class="dot"></span>2wheels.com ranking for "sur ron dc", "dirt bike dc"</div>
+          <div class="month-item todo"><span class="dot"></span>Open to other DC resellers — take % on listings</div>
+          <div class="month-item todo"><span class="dot"></span>Expand state-by-state: DC → VA → MD → NC → FL</div>
+          <div class="month-item todo"><span class="dot"></span>Two Wheels = USA's #1 bike marketplace</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SEARCH TERMS -->
+  <section id="search">
+    <div class="section-tag">04 — What We're Hunting</div>
+    <div class="section-title">241 Active Search Terms</div>
+    <div class="terms-grid">
+      <span class="term-pill electric">Sur Ron LBX</span>
+      <span class="term-pill electric">Sur Ron Storm Bee</span>
+      <span class="term-pill electric">Talaria Sting</span>
+      <span class="term-pill electric">Talaria Ultra Bee</span>
+      <span class="term-pill electric">Talaria XXX</span>
+      <span class="term-pill electric">Altis Sigma</span>
+      <span class="term-pill electric">Stark Varg</span>
+      <span class="term-pill electric">Segway X260</span>
+      <span class="term-pill electric">Super73</span>
+      <span class="term-pill electric">Ebox</span>
+      <span class="term-pill dirt">CRF450R</span>
+      <span class="term-pill dirt">YZ450F</span>
+      <span class="term-pill dirt">KX450</span>
+      <span class="term-pill dirt">KTM 450 SXF</span>
+      <span class="term-pill dirt">Husqvarna FC450</span>
+      <span class="term-pill dirt">Beta 450RX</span>
+      <span class="term-pill dirt">YZ250F</span>
+      <span class="term-pill dirt">CRF250R</span>
+      <span class="term-pill dirt">KX250</span>
+      <span class="term-pill dirt">KTM 250 SXF</span>
+      <span class="term-pill dirt">Husqvarna FC250</span>
+      <span class="term-pill dirt">Beta 250RR</span>
+      <span class="term-pill dirt">YZ250 2-stroke</span>
+      <span class="term-pill dirt">KTM EXC 300</span>
+      <span class="term-pill dirt">Husqvarna TE300</span>
+      <span class="term-pill dirt">Beta 300RR</span>
+      <span class="term-pill dirt">DRZ400SM</span>
+      <span class="term-pill dirt">KLX300</span>
+      <span class="term-pill dirt">Husqvarna 701</span>
+      <span class="term-pill dirt">KTM 690 SMC</span>
+      <span class="term-pill dirt">Honda Grom</span>
+      <span class="term-pill dirt">Honda Monkey</span>
+      <span class="term-pill dirt">KTM 85SX</span>
+      <span class="term-pill dirt">CRF125F</span>
+      <span class="term-pill street">Yamaha R6</span>
+      <span class="term-pill street">CBR600RR</span>
+      <span class="term-pill street">GSXR600</span>
+      <span class="term-pill street">GSXR750</span>
+      <span class="term-pill street">ZX-6R</span>
+      <span class="term-pill street">Ninja 400</span>
+      <span class="term-pill street">MT-07</span>
+      <span class="term-pill street">MT-09</span>
+      <span class="term-pill street">Africa Twin</span>
+      <span class="term-pill street">Tenere 700</span>
+      <span class="term-pill street">BMW GS 1200</span>
+      <span class="term-pill street">KTM Duke 390</span>
+      <span class="term-pill car">Honda Civic</span>
+      <span class="term-pill car">Toyota Camry</span>
+      <span class="term-pill car">Honda Accord</span>
+      <span class="term-pill car">Toyota Corolla</span>
+      <span class="term-pill car">Subaru WRX</span>
+      <span class="term-pill car">Toyota RAV4</span>
+      <span class="term-pill car">Honda CRV</span>
+      <span class="term-pill car">Hyundai Elantra</span>
+      <span class="term-pill car">Mazda3</span>
+      <span class="term-pill car">Kia Optima</span>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:16px;flex-wrap:wrap;">
+      <span style="font-size:12px;color:#555;">🟢 Electric &nbsp;</span>
+      <span style="font-size:12px;color:#555;">🟡 Dirt / Moto &nbsp;</span>
+      <span style="font-size:12px;color:#555;">🟣 Street / Adventure &nbsp;</span>
+      <span style="font-size:12px;color:#555;">🔵 Cars (new)</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROFIT RULES -->
+  <section id="profit">
+    <div class="section-tag">05 — The Rules</div>
+    <div class="section-title">Profit Requirements</div>
+    <div style="background:#0d0d18;border:1px solid #1a1a2a;border-radius:16px;overflow:hidden;">
+      <table class="profit-table">
+        <thead>
+          <tr>
+            <th>What You Spend</th>
+            <th>Min Profit Needed</th>
+            <th>Distance Rule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Under $1,500</td><td>$600+</td><td>0–30 mi: fine at $600+</td></tr>
+          <tr><td>$1,500 – $3,000</td><td>$1,000+</td><td>30–60 mi: need $1,200+</td></tr>
+          <tr><td>$3,000 – $5,000</td><td>$1,500+</td><td>60–100 mi: need $2,000+</td></tr>
+          <tr><td>$5,000 – $7,000</td><td>$2,000+</td><td>Over 100 mi: skip</td></tr>
+          <tr><td>$7,000 – $8,000</td><td>$3,000+</td><td>Must be exceptional</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- COMMANDS -->
+  <section id="commands">
+    <div class="section-tag">06 — Commands</div>
+    <div class="section-title">Cheat Sheet</div>
+    <div class="cmd-grid">
+      <div class="cmd-block">
+        <div class="cmd-title">Scanner</div>
+        <span class="cmd-line cmd-comment"># Start (24/7 background)</span>
+        <span class="cmd-line">cd ~/Desktop/fb_deal_scanner</span>
+        <span class="cmd-line">nohup /opt/homebrew/bin/python3 -u main.py --loop > scanner.log 2>&1 &</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Check it's running</span>
+        <span class="cmd-line">ps aux | grep main.py | grep -v grep</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Watch live</span>
+        <span class="cmd-line">tail -f ~/Desktop/fb_deal_scanner/scanner.log</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Stop</span>
+        <span class="cmd-line">pkill -f "main.py --loop"</span>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd-title">Deal Tools</div>
+        <span class="cmd-line cmd-comment"># Should I buy this?</span>
+        <span class="cmd-line">python3 advisor.py</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Accept / counter an offer?</span>
+        <span class="cmd-line">python3 advisor.py offer</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Trade worth it?</span>
+        <span class="cmd-line">python3 advisor.py trade</span>
+        <br>
+        <span class="cmd-line cmd-comment"># Draft next FB message</span>
+        <span class="cmd-line">python3 negotiator.py</span>
+        <br>
+        <span class="cmd-line cmd-comment"># View pipeline / log profit (or use dashboard /selling)</span>
+        <span class="cmd-line">python3 pipeline.py</span>
+        <span class="cmd-line">python3 pipeline.py sold</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- NEXT ACTIONS -->
+  <section id="actions">
+    <div class="section-tag">07 — Do This Now</div>
+    <div class="section-title">Next Physical Actions</div>
+    <div class="actions-list">
+      <div class="action-item">
+        <div class="action-num">1</div>
+        <div class="action-text"><strong>Check your email</strong> — scanner already ran, deals are waiting at stykie4@gmail.com</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">2</div>
+        <div class="action-text"><strong>Open top-scored listings</strong> — Score 5+ deals come pre-analyzed with offer strategy in the email</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">3</div>
+        <div class="action-text"><strong>Add your past deals to the pipeline</strong> — go to <code style="color:#00ff88">/selling</code> → scroll to <strong>📜 Past Flips</strong> and fill out the form</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">4</div>
+        <div class="action-text"><strong>Reserve @twowheels</strong> on Instagram and TikTok — do this today before someone takes it</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">5</div>
+        <div class="action-text"><strong>Hit next $1,000 profit → buy used Mac Mini M1 (~$400)</strong> for 24/7 scanner at home. Cloud hosting was ruled out (datacenter IPs trip FB bot detection).</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">6</div>
+        <div class="action-text"><strong>Build buyer SMS list</strong> — text every past buyer/inquirer: "Hey, I flip bikes in DC. New inventory weekly — want first dibs?"</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="footer">
+  Two Wheels · Washington DC · Built with Claude Code · Updated May 24, 2026
+</div>
+
+</body>
+</html>

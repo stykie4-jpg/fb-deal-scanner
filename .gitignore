@@ -1,0 +1,11 @@
+chrome_profile/
+.venv/
+__pycache__/
+*.pyc
+*.log
+seen_listings.json
+messaged_listings.json
+scan_state.json
+messages.json
+files.zip
+.DS_Store

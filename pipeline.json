@@ -1,0 +1,185 @@
+[
+  {
+    "id": "surron-lbx-2024",
+    "title": "2024 Sur Ron Light Bee X",
+    "stage": "listed",
+    "buy_price": 2000,
+    "ask_price": 3500,
+    "notes": "Half of $4k LBX+Razor combo (traded Ultra Bee). Upgrades: headlight, Guts seat, wrap, Odi plate, foot pegs.",
+    "updated": "2026-05-25",
+    "description": "Clean 2024 Sur Ron Light Bee X with 1,200 miles. Runs and rides perfectly — fully sorted from day one. Already upgraded with the parts most people pay extra for after they buy: aftermarket headlight, Guts gripper seat, custom wrap, Odi bar pad, and upgraded foot pegs. Battery holds full charge, all electrics work. Title in hand. No leaks, no clicks, no surprises. Honest miles, honest bike — ready to ride away same day. Cash, Zelle, or partial trade considered.",
+    "year": 2024,
+    "mileage": "1,200 mi",
+    "category": "E-Moto",
+    "title_status": "Clean",
+    "highlights": ["1,200 mi", "Headlight + Guts seat", "Custom wrap", "Odi bar pad", "Upgraded pegs", "Clean title"],
+    "photos": [
+      "/static/bikes/surron-1.jpg",
+      "/static/bikes/surron-2.jpg",
+      "/static/bikes/surron-3.jpg",
+      "/static/bikes/surron-4.jpg",
+      "/static/bikes/surron-5.jpg"
+    ],
+    "listings": {
+      "facebook": "https://www.facebook.com/share/1CcUqgcgJ1/",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "https://www.instagram.com/p/DYulK4IEcO-/",
+      "reddit": "",
+      "other": ""
+    }
+  },
+  {
+    "id": "r6-2005",
+    "title": "2005 Yamaha YZF-R6",
+    "stage": "listed",
+    "buy_price": 2100,
+    "ask_price": 4800,
+    "notes": "Traded DRZ400 ($2,900) for R6 + $800 cash back. Net basis $2,100.",
+    "updated": "2026-05-25",
+    "description": "2005 Yamaha R6 — the legendary 5SL generation, the last of the carbureted R6s and the one everyone wants for track builds. 35k miles, completely stock, clean title in hand. Regularly maintained: fresh oil, chain in spec, tires have life, runs strong from cold start. No dropped panels, no race history, no salvage. Honest miles, honest bike. Cold-start video on request. This is a tight, fun, intermediate-friendly sportbike at a fair price — not a flipper's beater. Cash, Zelle, or partial trade.",
+    "year": 2005,
+    "mileage": "35,000 mi",
+    "category": "Sportbike",
+    "title_status": "Clean",
+    "highlights": ["5SL generation", "Stock + clean", "Maintained", "No drops", "Clean title", "Cold-start video"],
+    "photos": [
+      "/static/bikes/r6-1.jpg",
+      "/static/bikes/r6-2.jpg"
+    ],
+    "listings": {
+      "facebook": "",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "",
+      "cycletrader": "",
+      "other": ""
+    }
+  },
+  {
+    "id": "talaria-mx4-2024",
+    "title": "2024 Talaria Sting R MX4",
+    "stage": "owned",
+    "buy_price": 2300,
+    "ask_price": 3400,
+    "notes": "Paid $2,200 cash + $100 in upgrades = $2,300 in. Realistic sale range $3,000-$3,400 (3k miles caps it). Brakes + pegs (~$200) are needed to HOLD the $3,400 ask.",
+    "updated": "2026-05-25",
+    "description": "2024 Talaria Sting R MX4 — the high-power version of the Sting, more torque and a stronger controller than the base model. 3,000 miles, all electronics 100%, battery healthy, charger included. Already upgraded with several aftermarket parts (full upgrade list available). Currently being prepped: upgraded brakes and pegs being installed before final sale — happy to discuss as-is delivery for $3,200 if you want it now. Title in hand, no liens. Open to cash, Zelle, or trade for a comparable e-moto, dirt bike, or clean motorcycle.",
+    "year": 2024,
+    "mileage": "3,000 mi",
+    "category": "E-Moto",
+    "title_status": "Clean",
+    "highlights": ["MX4 high-power", "3,000 mi", "Upgraded parts", "Brake/peg upgrade in progress", "Clean title", "Trades OK"],
+    "photos": [],
+    "listings": {
+      "facebook": "",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "",
+      "reddit": "",
+      "other": ""
+    }
+  },
+  {
+    "id": "razor-stage2-m2-2025",
+    "title": "2025 Razor Stage 2 M2",
+    "stage": "listed",
+    "buy_price": 2000,
+    "ask_price": 3900,
+    "notes": "Half of $4k LBX+Razor combo (traded Ultra Bee). Premium 72V build w/ Deore brakes, Fast Ace forks.",
+    "updated": "2026-05-25",
+    "description": "2025 Razor Stage 2 M2 — premium 72V build, fully sorted. 45Ah battery, 70+ mph top speed verified on GPS, only 800 miles. Built with the parts that actually matter: Shimano Deore hydraulic brakes for real stopping power and Fast Ace forks for a real suspension feel. Smooth power delivery, instant throttle response, runs like new because it basically is. Charger and key included. Title in hand. Cash, Zelle, or trade.",
+    "year": 2025,
+    "mileage": "800 mi",
+    "category": "E-Moto",
+    "title_status": "Clean",
+    "highlights": ["72V 45Ah", "70+ mph verified", "800 mi", "Deore brakes", "Fast Ace forks", "Clean title"],
+    "photos": [
+      "/static/bikes/razor-1.jpg",
+      "/static/bikes/razor-2.jpg",
+      "/static/bikes/razor-3.jpg",
+      "/static/bikes/razor-4.jpg",
+      "/static/bikes/razor-5.jpg"
+    ],
+    "listings": {
+      "facebook": "",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "",
+      "reddit": "",
+      "other": ""
+    }
+  },
+  {
+    "id": 1,
+    "title": "KLX300",
+    "url": null,
+    "buy_price": 1600,
+    "ask_price": 2500,
+    "sold_price": 2500,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2007",
+    "updated": "2007"
+  },
+  {
+    "id": 6,
+    "title": "1990 Chevrolet Regular Cab",
+    "url": null,
+    "buy_price": 2000,
+    "ask_price": 3800,
+    "sold_price": 3800,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2025-11-25",
+    "updated": "2025-11-25"
+  },
+  {
+    "id": 7,
+    "title": "2024 Surron Light Bee Battery",
+    "url": null,
+    "buy_price": 100,
+    "ask_price": 600,
+    "sold_price": 600,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2025-12-20",
+    "updated": "2025-12-20"
+  },
+  {
+    "id": 8,
+    "title": "2023 Surron Light Bee X",
+    "url": null,
+    "buy_price": 2800,
+    "ask_price": 3700,
+    "sold_price": 3700,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2024-09-20",
+    "updated": "2024-09-20"
+  },
+  {
+    "id": 9,
+    "title": "2025 Surron Light Bee X",
+    "url": null,
+    "buy_price": 1600,
+    "ask_price": 3700,
+    "sold_price": 3700,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2025-12-25",
+    "updated": "2025-12-25"
+  },
+  {
+    "id": 10,
+    "title": "2024 Upgraded Surron Ultra Bee",
+    "url": null,
+    "buy_price": 4800,
+    "ask_price": 7000,
+    "sold_price": 7000,
+    "stage": "sold",
+    "notes": "Past flip",
+    "added": "2026-05-20",
+    "updated": "2026-05-20"
+  }
+]

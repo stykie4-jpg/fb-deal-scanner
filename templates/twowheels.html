@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Wheels — DMV's Premium Home for Motorcycles, Dirt Bikes & E-Motos</title>
+<meta name="description" content="Hand-inspected motorcycles, dirt bikes, and e-motos in DC / VA / MD. Real shop. Real bikes. Real prices.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #050507;
+    color: #e8e8ed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ───────── FULL-BLEED HERO with garage photo ───────── */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(180deg, rgba(5,5,7,0.55) 0%, rgba(5,5,7,0.35) 35%, rgba(5,5,7,0.85) 90%, #050507 100%),
+      url('/static/garage-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #0a0807;
+    animation: slow-zoom 30s ease-in-out infinite alternate;
+  }
+  @keyframes slow-zoom {
+    0%   { transform: scale(1.0); }
+    100% { transform: scale(1.06); }
+  }
+  /* warm ambient light bleed */
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 10%, rgba(255,180,90,0.18), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,0,0,0.55), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* nav over hero */
+  .nav-wrap { position: relative; z-index: 10; }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto; padding: 22px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 3px;
+    background: linear-gradient(90deg, #ffd27a 0%, #ff8a3c 50%, #ffd27a 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(255,160,60,0.3);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-link {
+    color: #f0e8dc; font-size: 13px; font-weight: 700; text-decoration: none;
+    letter-spacing: 1.4px; text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  }
+  .nav-link:hover { color: #ff8a3c; }
+  .nav-cta {
+    color: #050507; font-size: 12px; font-weight: 800; text-decoration: none;
+    padding: 11px 22px; border-radius: 8px; letter-spacing: 1.2px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ffd27a, #ff8a3c);
+    box-shadow: 0 8px 28px rgba(255,160,60,0.45);
+  }
+  .nav-cta:hover { box-shadow: 0 10px 36px rgba(255,160,60,0.65); }
+
+  /* floating hero text */
+  .hero-content {
+    position: relative; z-index: 5;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 60px 32px 120px;
+  }
+  .hero-kicker {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ffd27a; font-size: 18px; letter-spacing: 8px;
+    margin-bottom: 22px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(255,180,90,0.4);
+    animation: fade-in 1.4s ease;
+  }
+  .hero-kicker::before, .hero-kicker::after {
+    content: '◆'; color: #ff8a3c; margin: 0 14px; font-size: 13px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 11vw, 144px);
+    font-weight: 400; letter-spacing: 2px; line-height: 0.9;
+    color: #ffffff;
+    margin-bottom: 28px;
+    text-shadow:
+      0 4px 30px rgba(0,0,0,0.95),
+      0 0 80px rgba(255,180,90,0.25),
+      0 2px 6px rgba(0,0,0,0.9);
+    animation: float-text 7s ease-in-out infinite, fade-in 1.6s ease;
+  }
+  .hero-title .accent {
+    background: linear-gradient(90deg, #ffd27a 0%, #ff8a3c 60%, #ffd27a 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(255,160,60,0.5));
+  }
+  @keyframes float-text {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-10px); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-sub {
+    color: #f0e8dc; font-size: 18px; max-width: 680px;
+    margin: 0 auto 40px; line-height: 1.65; font-weight: 500;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.95);
+    animation: fade-in 1.8s ease;
+  }
+  .hero-buttons {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    animation: fade-in 2s ease;
+  }
+  .hero-btn {
+    display: inline-block; padding: 16px 32px; border-radius: 10px;
+    font-size: 13px; font-weight: 800; letter-spacing: 1.6px;
+    text-transform: uppercase; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero-btn-primary {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05;
+    box-shadow: 0 10px 36px rgba(255,160,60,0.45);
+  }
+  .hero-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 44px rgba(255,160,60,0.65);
+  }
+  .hero-btn-ghost {
+    background: rgba(15,12,9,0.7); color: #ffd27a;
+    border: 1px solid rgba(255,160,60,0.4); backdrop-filter: blur(8px);
+  }
+  .hero-btn-ghost:hover {
+    background: rgba(255,138,60,0.15);
+    border-color: rgba(255,160,60,0.7);
+  }
+
+  /* scroll hint */
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 5; color: #ffd27a; font-size: 10px; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.9);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    animation: bounce 2.2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: ''; width: 1px; height: 36px;
+    background: linear-gradient(180deg, #ffd27a, transparent);
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%     { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ───── REST OF PAGE ───── */
+  .wrap { position: relative; max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  /* trust strip */
+  .trust {
+    display: flex; justify-content: center; gap: 36px;
+    padding: 36px 0 16px; font-size: 13px; color: #a8a098;
+    flex-wrap: wrap; border-bottom: 1px solid rgba(180,140,90,0.15);
+  }
+  .trust span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust b { color: #ff8a3c; font-size: 14px; }
+
+  /* hero stats below */
+  .stat-row {
+    display: flex; gap: 60px; justify-content: center; flex-wrap: wrap;
+    padding: 40px 0; border-bottom: 1px solid rgba(180,140,90,0.15);
+  }
+  .stat { text-align: center; }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; color: #ffd27a; letter-spacing: 2px; line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 2.4px;
+    color: #888070; margin-top: 8px;
+  }
+
+  /* section heading */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; letter-spacing: 2.5px; margin: 80px 0 8px;
+    color: #f5f0e8;
+    text-shadow: 0 0 24px rgba(255,200,120,0.18);
+  }
+  .section-title .accent { color: #ff8a3c; }
+  .section-sub { color: #888070; font-size: 14px; margin-bottom: 32px; letter-spacing: 0.6px; }
+
+  /* bike grid */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 26px;
+  }
+  .bike-card {
+    background: linear-gradient(165deg, rgba(20,16,12,0.95) 0%, rgba(10,8,6,0.95) 100%);
+    border: 1px solid rgba(180,140,90,0.18);
+    border-radius: 16px; overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    text-decoration: none; color: inherit; display: block;
+  }
+  .bike-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #ff8a3c, transparent);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .bike-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,160,60,0.5);
+    box-shadow: 0 20px 60px rgba(255,140,40,0.22);
+  }
+  .bike-card:hover::before { opacity: 1; }
+
+  .bike-photo {
+    aspect-ratio: 4/3; background: #0a0807;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .bike-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .bike-card:hover .bike-photo img { transform: scale(1.05); }
+  .bike-photo .placeholder {
+    display: flex; flex-direction: column; gap: 8px; align-items: center;
+    width: 100%; height: 100%; justify-content: center;
+    color: #3a3228; font-size: 11px; letter-spacing: 2px; font-weight: 700;
+    background: repeating-linear-gradient(45deg, #0a0807, #0a0807 14px, #0d0a08 14px, #0d0a08 28px);
+  }
+  .bike-photo .placeholder b {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px; color: #4a3e30; letter-spacing: 3px;
+  }
+  .stage-tag {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 10px; font-weight: 800; letter-spacing: 1.6px;
+    padding: 6px 12px; border-radius: 99px;
+    backdrop-filter: blur(10px);
+    background: rgba(255,138,60,0.22); color: #ffd27a;
+    border: 1px solid rgba(255,138,60,0.6);
+  }
+  .bike-info { padding: 22px; }
+  .bike-title {
+    font-size: 17px; font-weight: 800; margin-bottom: 8px; line-height: 1.3;
+    color: #f0e8dc;
+  }
+  .bike-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px; color: #ff8a3c; margin-bottom: 14px;
+    letter-spacing: 1.5px; line-height: 1;
+  }
+  .bike-price small {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; color: #666; font-weight: 600;
+    margin-left: 8px; letter-spacing: 0.8px; text-transform: uppercase;
+  }
+  .bike-highlights { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .bike-highlight {
+    font-size: 10px; padding: 4px 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(180,140,90,0.2);
+    border-radius: 99px; color: #a8a098;
+    text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;
+  }
+  .bike-cta {
+    display: block; text-align: center;
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; padding: 12px; border-radius: 10px;
+    font-weight: 800; font-size: 12px; letter-spacing: 1.4px;
+    text-transform: uppercase; text-decoration: none;
+  }
+
+  .empty {
+    grid-column: 1 / -1; padding: 70px 24px; text-align: center;
+    background: rgba(20,16,12,0.6); border: 1px dashed rgba(180,140,90,0.25);
+    border-radius: 14px; color: #888070;
+  }
+  .empty b {
+    font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #4a3e30;
+    letter-spacing: 2px; display: block; margin-bottom: 8px;
+  }
+
+  /* lead section */
+  .lead-section {
+    margin: 80px 0; padding: 48px 36px;
+    background:
+      linear-gradient(135deg, rgba(255,138,60,0.08), rgba(255,210,122,0.04)),
+      rgba(15,12,9,0.7);
+    border: 1px solid rgba(255,138,60,0.25);
+    border-radius: 20px;
+    position: relative; overflow: hidden;
+  }
+  .lead-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,160,60,0.14), transparent 70%);
+    pointer-events: none;
+  }
+  .lead-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; letter-spacing: 2.5px; margin-bottom: 10px;
+    color: #f5f0e8; position: relative;
+  }
+  .lead-section h2 .accent { color: #ff8a3c; }
+  .lead-section p {
+    color: #b8b0a4; font-size: 14px; margin-bottom: 26px;
+    line-height: 1.6; max-width: 560px; position: relative;
+  }
+  .lead-form {
+    display: grid; grid-template-columns: 1fr 1fr 2fr auto; gap: 10px;
+    align-items: center; position: relative;
+  }
+  .lead-form input, .lead-form button {
+    height: 48px; padding: 0 16px; border-radius: 10px; font-size: 14px;
+    font-family: inherit;
+    border: 1px solid rgba(180,140,90,0.22);
+    background: rgba(8,6,5,0.85); color: #e8e8ed;
+  }
+  .lead-form input::placeholder { color: #6a625a; }
+  .lead-form input:focus {
+    outline: none; border-color: rgba(255,160,60,0.5);
+    background: rgba(15,12,9,0.95);
+  }
+  .lead-form button {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none;
+    font-weight: 800; padding: 0 30px; cursor: pointer;
+    letter-spacing: 1.2px; text-transform: uppercase; font-size: 13px;
+  }
+  .lead-form button:hover { box-shadow: 0 6px 24px rgba(255,140,60,0.45); }
+  .lead-msg {
+    font-size: 13px; color: #ff8a3c; margin-top: 14px;
+    height: 18px; position: relative;
+  }
+  @media (max-width: 720px) { .lead-form { grid-template-columns: 1fr; } }
+
+  /* sold wall */
+  .sold-wall { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sold-chip {
+    background: rgba(15,12,9,0.7); border: 1px solid rgba(180,140,90,0.18);
+    padding: 10px 18px; border-radius: 99px;
+    font-size: 12px; color: #a8a098;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .sold-chip b { color: #ff8a3c; font-weight: 800; }
+
+  footer {
+    padding: 64px 0 36px; text-align: center; color: #6a625a; font-size: 12px;
+    margin-top: 80px; border-top: 1px solid rgba(180,140,90,0.15);
+  }
+  footer a { color: #a8a098; text-decoration: none; }
+  footer a:hover { color: #ff8a3c; }
+  .footer-email { color: #ff8a3c; font-weight: 700; letter-spacing: 0.5px; }
+
+  /* ─── CHAT WIDGET ─── */
+  .chat-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 100;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none; cursor: pointer;
+    font-size: 28px;
+    box-shadow: 0 10px 30px rgba(255,140,60,0.45), 0 0 0 4px rgba(255,140,60,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .chat-btn:hover { transform: scale(1.08); box-shadow: 0 14px 40px rgba(255,140,60,0.6); }
+  .chat-btn.open { background: #222; color: #ff8a3c; }
+  .chat-panel {
+    position: fixed; bottom: 100px; right: 24px; z-index: 99;
+    width: 360px; max-width: calc(100vw - 48px); max-height: 540px;
+    background: linear-gradient(165deg, #15110d 0%, #0a0807 100%);
+    border: 1px solid rgba(255,138,60,0.35); border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+    display: none; flex-direction: column; overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .chat-panel.open { display: flex; }
+  .chat-header {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    padding: 16px 20px; color: #1a0e05;
+  }
+  .chat-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; }
+  .chat-header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .chat-body { padding: 18px 20px; flex: 1; overflow-y: auto; }
+  .chat-body p {
+    background: rgba(255,138,60,0.08); border-left: 3px solid #ff8a3c;
+    padding: 12px 14px; border-radius: 8px;
+    font-size: 13px; color: #d8d0c4; line-height: 1.55;
+  }
+  .chat-form { display: flex; flex-direction: column; gap: 8px; padding: 16px 20px 20px; }
+  .chat-form input, .chat-form textarea {
+    padding: 11px 12px; border-radius: 8px;
+    border: 1px solid rgba(180,140,90,0.22);
+    background: rgba(8,6,5,0.9); color: #e8e8ed;
+    font-family: inherit; font-size: 13px;
+  }
+  .chat-form input:focus, .chat-form textarea:focus {
+    outline: none; border-color: rgba(255,160,60,0.6);
+  }
+  .chat-form textarea { min-height: 80px; resize: vertical; }
+  .chat-form button {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none; cursor: pointer;
+    padding: 12px; border-radius: 8px;
+    font-weight: 800; letter-spacing: 1px; text-transform: uppercase; font-size: 12px;
+  }
+  .chat-msg { font-size: 12px; color: #ff8a3c; min-height: 16px; padding: 0 20px 12px; }
+  .chat-foot {
+    padding: 12px 20px; border-top: 1px solid rgba(180,140,90,0.15);
+    font-size: 11px; color: #6a625a; text-align: center;
+  }
+  .chat-foot a { color: #ff8a3c; text-decoration: none; font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .nav-inner { padding: 16px 20px; }
+    .nav-links { gap: 14px; }
+    .section-title { font-size: 36px; }
+    .stat-row { gap: 30px; }
+    .stat-val { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═════════ HERO with garage photo + floating text ═════════ -->
+<section class="hero-section">
+  <div class="hero-bg"></div>
+
+  <div class="nav-wrap">
+    <div class="nav-inner">
+      <a class="brand" href="/inventory">TWO WHEELS</a>
+      <div class="nav-links">
+        <a class="nav-link" href="#inventory">Inventory</a>
+        <a class="nav-link" href="#alerts">Alerts</a>
+        <a class="nav-cta" href="#" onclick="openChat();return false;">Chat</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <span class="hero-kicker">DC · VIRGINIA · MARYLAND</span>
+    <h1 class="hero-title">Real Bikes.<br>Real Shop.<br><span class="accent">Real Prices.</span></h1>
+    <p class="hero-sub">The DMV's premium home for motorcycles, dirt bikes, and e-motos. Every machine is hand-inspected, honestly priced, and ready to ride away. No dealer markup. No craigslist gamble. No Facebook detours.</p>
+    <div class="hero-buttons">
+      <a class="hero-btn hero-btn-primary" href="#inventory">View Inventory →</a>
+      <a class="hero-btn hero-btn-ghost" href="#" onclick="openChat();return false;">Talk to us</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ═════════ MAIN CONTENT ═════════ -->
+<div class="wrap">
+
+  <div class="trust">
+    <span><b>✓</b> Inspected before purchase</span>
+    <span><b>✓</b> Clean titles only</span>
+    <span><b>✓</b> Test rides welcome</span>
+    <span><b>✓</b> Bring your mechanic</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-val">{{ stock_count }}</div><div class="stat-lbl">In Stock Now</div></div>
+    <div class="stat"><div class="stat-val">DC · VA · MD</div><div class="stat-lbl">Local Pickup</div></div>
+    <div class="stat"><div class="stat-val">Cash · Trade</div><div class="stat-lbl">Welcome</div></div>
+  </div>
+
+  <h2 class="section-title" id="inventory">In <span class="accent">Stock</span></h2>
+  <p class="section-sub">Every machine currently on the lot. Click any bike for full photos, specs, and inquiry.</p>
+
+  <div class="grid">
+    {% for b in bikes %}
+      <a class="bike-card" href="/bike/{{ b.id }}">
+        <div class="bike-photo">
+          {% if b.photos and b.photos[0] %}
+            <img src="{{ b.photos[0] }}" alt="{{ b.title }}">
+          {% else %}
+            <div class="placeholder"><b>TW</b><span>PHOTOS COMING</span></div>
+          {% endif %}
+          <div class="stage-tag">
+            {% if b.stage == 'owned' %}NEW ARRIVAL{% else %}AVAILABLE{% endif %}
+          </div>
+        </div>
+        <div class="bike-info">
+          <div class="bike-title">{{ b.title }}</div>
+          <div class="bike-price">${{ "{:,}".format(b.ask_price) }}<small>or best offer</small></div>
+          {% if b.highlights %}
+            <div class="bike-highlights">
+              {% for h in b.highlights[:4] %}<span class="bike-highlight">{{ h }}</span>{% endfor %}
+            </div>
+          {% endif %}
+          <span class="bike-cta">View Details →</span>
+        </div>
+      </a>
+    {% else %}
+      <div class="empty">
+        <b>EMPTY LOT</b>
+        Fresh inventory drops weekly. <a href="#alerts" style="color:#ff8a3c;font-weight:700;">Get alerts</a> the moment a bike hits.
+      </div>
+    {% endfor %}
+  </div>
+
+  <section class="lead-section" id="alerts">
+    <h2>Get <span class="accent">First Dibs.</span></h2>
+    <p>Drop your number. We'll text you the moment a fresh bike hits the lot — usually before it's even on Facebook. Zero spam. Unsubscribe anytime.</p>
+    <form class="lead-form" onsubmit="submitLead(event)">
+      <input type="text" id="leadName" placeholder="Your name (optional)">
+      <input type="text" id="leadContact" placeholder="Phone or email *" required>
+      <input type="text" id="leadLooking" placeholder="What you're looking for (e.g. Sur Ron under $3k)">
+      <button type="submit">Send</button>
+    </form>
+    <div class="lead-msg" id="leadMsg"></div>
+  </section>
+
+  {% if recent_sold %}
+  <h2 class="section-title">Recently <span class="accent">Sold</span></h2>
+  <p class="section-sub">A taste of what moves through the shop.</p>
+  <div class="sold-wall">
+    {% for s in recent_sold %}
+      <span class="sold-chip">{{ s.title }} <b>${{ "{:,}".format(s.sold_price) }}</b></span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <footer>
+    <div style="margin-bottom:8px;font-size:13px;">
+      Two Wheels · Washington DC · Northern Virginia · Maryland
+    </div>
+    <div>
+      Questions? Email <a class="footer-email" href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+      · <a href="#" onclick="openChat();return false;">Or chat with us</a>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:#4a4238;">Cash · Zelle · Trade welcome</div>
+  </footer>
+</div>
+
+<!-- ─── CHAT WIDGET ─── -->
+<button class="chat-btn" id="chatBtn" onclick="toggleChat()" aria-label="Open chat">💬</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <h3>Talk to Two Wheels</h3>
+    <p>Replies within an hour during shop hours.</p>
+  </div>
+  <div class="chat-body">
+    <p>Got a question about a bike, want to schedule a test ride, or looking for something specific? Drop a message — the shop owner reads every message directly.</p>
+  </div>
+  <form class="chat-form" onsubmit="submitChat(event)">
+    <input type="text" id="chatName" placeholder="Your name (optional)">
+    <input type="text" id="chatContact" placeholder="Phone or email *" required>
+    <textarea id="chatMessage" placeholder="What's up? Which bike, your budget, what you're after..." required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <div class="chat-msg" id="chatMsg"></div>
+  <div class="chat-foot">
+    Or email <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  const btn = document.getElementById('chatBtn');
+  panel.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.textContent = panel.classList.contains('open') ? '×' : '💬';
+}
+function openChat() {
+  const panel = document.getElementById('chatPanel');
+  const btn = document.getElementById('chatBtn');
+  panel.classList.add('open'); btn.classList.add('open'); btn.textContent = '×';
+  setTimeout(() => document.getElementById('chatContact').focus(), 200);
+}
+
+async function submitLead(e) {
+  e.preventDefault();
+  const name = document.getElementById('leadName').value.trim();
+  const contact = document.getElementById('leadContact').value.trim();
+  const looking = document.getElementById('leadLooking').value.trim();
+  const msg = document.getElementById('leadMsg');
+  if (!contact) { msg.textContent = 'Phone or email required.'; msg.style.color='#ff8c00'; return; }
+  msg.textContent = 'Sending…'; msg.style.color = '#888';
+  try {
+    const r = await fetch('/api/lead', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name, contact, looking_for: looking })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      msg.textContent = "✓ You're on the list. We'll text the moment fresh inventory drops.";
+      msg.style.color = '#ff8a3c';
+      document.getElementById('leadName').value = '';
+      document.getElementById('leadContact').value = '';
+      document.getElementById('leadLooking').value = '';
+    } else {
+      msg.textContent = data.error || 'Something went wrong.'; msg.style.color='#ff8c00';
+    }
+  } catch(err) {
+    msg.textContent = 'Network error — try again.'; msg.style.color='#ff8c00';
+  }
+}
+
+async function submitChat(e) {
+  e.preventDefault();
+  const name = document.getElementById('chatName').value.trim();
+  const contact = document.getElementById('chatContact').value.trim();
+  const message = document.getElementById('chatMessage').value.trim();
+  const msg = document.getElementById('chatMsg');
+  if (!contact || !message) {
+    msg.textContent = 'Contact and message required.'; msg.style.color='#ff8c00'; return;
+  }
+  msg.textContent = 'Sending…'; msg.style.color = '#888';
+  try {
+    const r = await fetch('/api/chat', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name, contact, message, bike_id: '', bike_title: 'General inquiry' })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      msg.textContent = "✓ Got it — we'll get back to you shortly.";
+      msg.style.color = '#ff8a3c';
+      document.getElementById('chatName').value = '';
+      document.getElementById('chatContact').value = '';
+      document.getElementById('chatMessage').value = '';
+    } else {
+      msg.textContent = data.error || 'Something went wrong.'; msg.style.color='#ff8c00';
+    }
+  } catch(err) {
+    msg.textContent = 'Network error — try again.'; msg.style.color='#ff8c00';
+  }
+}
+</script>
+</body>
+</html>

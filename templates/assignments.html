@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Wheels — Assignments</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080810; color: #e0e0e0; font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  .nav { position: sticky; top: 0; z-index: 100; background: #080810ee; backdrop-filter: blur(12px); border-bottom: 1px solid #ffffff0a; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .nav-logo span { color: #00d4ff; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 12px; font-weight: 600; color: #555; text-decoration: none; text-transform: uppercase; letter-spacing: 0.8px; }
+  .nav-links a:hover, .nav-links a.active { color: #00d4ff; }
+  .nav-back { font-size: 12px; color: #333; text-decoration: none; padding: 6px 14px; border: 1px solid #222; border-radius: 6px; }
+  .nav-back:hover { border-color: #00d4ff44; color: #00d4ff; }
+
+  .hero { padding: 60px 40px 40px; text-align: center; background: linear-gradient(135deg, #080810 0%, #0d1525 100%); border-bottom: 1px solid #ffffff08; }
+  .hero-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #ffd700; border: 1px solid #ffd70033; border-radius: 99px; padding: 5px 14px; margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; background: linear-gradient(135deg, #fff 30%, #ffd700 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+  .hero-sub { font-size: 15px; color: #555; }
+
+  .progress-bar-wrap { max-width: 700px; margin: 24px auto 0; }
+  .progress-track { background: #1a1a2a; border-radius: 99px; height: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #00ff88, #00d4ff, #ffd700); border-radius: 99px; transition: width 0.6s ease; box-shadow: 0 0 12px #00ff8855; }
+  .progress-label { margin-top: 10px; font-size: 13px; color: #888; }
+  .progress-label strong { color: #00ff88; font-size: 16px; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px; }
+
+  .month-section { margin-bottom: 48px; }
+  .month-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .month-num { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0; }
+  .month-num.m1 { background: #00ff8815; color: #00ff88; border: 1px solid #00ff8830; }
+  .month-num.m2 { background: #00d4ff15; color: #00d4ff; border: 1px solid #00d4ff30; }
+  .month-num.m3 { background: #ffd70015; color: #ffd700; border: 1px solid #ffd70030; }
+  .month-num.m4 { background: #ff8c0015; color: #ff8c00; border: 1px solid #ff8c0030; }
+  .month-num.m5 { background: #9945ff15; color: #9945ff; border: 1px solid #9945ff30; }
+  .month-num.m6 { background: #ff445515; color: #ff4455; border: 1px solid #ff445530; }
+  .month-num.m7 { background: #ffffff10; color: #fff; border: 1px solid #ffffff20; }
+  .month-info { flex: 1; }
+  .month-name { font-size: 22px; font-weight: 800; color: #fff; }
+  .month-theme { font-size: 13px; color: #555; margin-top: 2px; }
+  .month-progress { font-size: 13px; color: #00ff88; font-weight: 700; padding: 6px 14px; background: #00ff8810; border: 1px solid #00ff8830; border-radius: 99px; }
+
+  .tasks { display: flex; flex-direction: column; gap: 8px; }
+  .task {
+    background: #0d0d18;
+    border: 1px solid #1a1a2a;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .task:hover { border-color: #00d4ff33; transform: translateX(2px); }
+  .task.done { opacity: 0.5; }
+  .task.done .task-title { text-decoration: line-through; color: #555; }
+  .checkbox {
+    width: 22px; height: 22px; border: 2px solid #333; border-radius: 6px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+    transition: all 0.15s;
+  }
+  .task.done .checkbox { background: #00ff88; border-color: #00ff88; }
+  .task.done .checkbox::after { content: '✓'; color: #000; font-weight: 800; font-size: 14px; }
+  .task-content { flex: 1; }
+  .task-title { font-size: 14px; font-weight: 600; color: #e0e0e0; margin-bottom: 4px; }
+  .task-desc { font-size: 13px; color: #666; line-height: 1.5; }
+  .task-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tag-easy { background: #00ff8815; color: #00ff88; }
+  .tag-medium { background: #ffd70015; color: #ffd700; }
+  .tag-hard { background: #ff445515; color: #ff4455; }
+  .tag-cash { background: #00d4ff15; color: #00d4ff; }
+  .tag-learn { background: #9945ff15; color: #9945ff; }
+
+  .reset-btn { background: #1a1a2a; color: #888; border: 1px solid #2a2a3a; padding: 8px 18px; border-radius: 8px; cursor: pointer; font-size: 12px; }
+  .reset-btn:hover { color: #ff4455; border-color: #ff445544; }
+  .footer { text-align: center; padding: 40px; color: #333; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">TWO <span>WHEELS</span></div>
+  <div class="nav-links">
+    <a href="/">Dashboard</a>
+    <a href="/plan">Plan</a>
+    <a href="/assignments" class="active">Assignments</a>
+  </div>
+  <a class="nav-back" href="/">← Dashboard</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🎯 Monthly Roadmap · 12-Month Buildout</div>
+  <h1>BUILD ASSIGNMENTS</h1>
+  <div class="hero-sub">Every action you take to build Two Wheels into the #1 USA bike marketplace</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label"><strong id="doneCount">0</strong> of <span id="totalCount">0</span> assignments complete · <span id="percentDone">0</span>% to USA's #1 marketplace</div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="months"></div>
+
+  <div style="text-align:center; margin-top: 48px;">
+    <button class="reset-btn" onclick="resetAll()">↺ Reset all checkboxes</button>
+  </div>
+</div>
+
+<div class="footer">Click any task to mark it done · Progress saved automatically · Two Wheels HQ</div>
+
+<script>
+const PLAN = [
+  {
+    month: "Month 1 · NOW — Close the $15k on the lot",
+    num: "1",
+    theme: "CASH FIRST — Convert every bike sitting on the lot into Zelle before chasing new deals",
+    tasks: [
+      // ─── HIGHEST CASH IMPACT FIRST ───
+      { t: "💰 SELL Sur Ron LBX 2024 — $3,500", d: "Already listed on FB. Photos now live on Two Wheels site. Cross-post to FB DMV emoto groups, OfferUp ($5 fee), eBay Motors. Send every FB inquiry the /bike/surron-lbx-2024 link — looks 10x more professional than a FB listing. Drop $200 if no bites in 48hrs.", tag: "hard", tagLabel: "$3,500" },
+      { t: "💰 SELL R6 2005 — $4,800", d: "NOT YET LISTED anywhere. Photos live on Two Wheels. List TODAY on FB Marketplace + Cycle Trader (#1 sportbike buyer pool) + OfferUp. Spring/summer = peak sportbike season. This is the highest-margin bike on the lot right now.", tag: "hard", tagLabel: "$4,800" },
+      { t: "💰 LIST Razor Stage 2 M2 — $3,900", d: "NOT YET LISTED. Premium 72V build with Deore brakes + Fast Ace forks = top-shelf emoto. FB Marketplace + FB DMV emoto groups + OfferUp + eBay Motors. Photos live on Two Wheels. Highest ticket emoto in DMV — price it confidently.", tag: "hard", tagLabel: "$3,900" },
+      { t: "🛠 Install brakes + pegs on Talaria MX4", d: "~$200 in parts. Without it, Talaria is a $3,000 bike. With it, $3,400 ask holds. Same weekend, both jobs. Then list it.", tag: "hard", tagLabel: "UNLOCKS $3,400" },
+      { t: "📸 Shoot 5 Talaria photos (after install)", d: "Same outdoor setup as Sur Ron / Razor. 5 angles minimum. AirDrop to Downloads, save into static/bikes/ as talaria-1.jpg → talaria-5.jpg, then tell me. Powers the Two Wheels listing.", tag: "easy", tagLabel: "30 MIN" },
+      { t: "💰 LIST + SELL Talaria MX4 — $3,400", d: "After brakes/pegs/photos done. FB + emoto groups + OfferUp. Moves fast — cheapest emoto on the lot.", tag: "hard", tagLabel: "$3,400" },
+
+      // ─── TWO WHEELS SITE — TURN VISITORS INTO BUYERS ───
+      { t: "🏠 Drop garage-hero.jpg into static/", d: "Find a high-quality photo of a real garage filled with dirt bikes / motorcycles / e-motos (Google 'motorcycle dealership interior' or 'moto garage'). This is the homepage hero background — without it the site looks bare.", tag: "easy", tagLabel: "15 MIN" },
+      { t: "📤 Send Two Wheels link to every FB buyer", d: "When someone DMs about a bike, send the /bike/<id> page. Real photo gallery, real description, chat widget — looks like a real shop. Tunnel link: lucia-habits-wave-wisconsin.trycloudflare.com", tag: "easy", tagLabel: "USE TODAY" },
+      { t: "🌐 Buy twowheelsdmv.com or 2wheels.com domain", d: "Namecheap / Cloudflare, ~$12/yr. Point it at the Cloudflare tunnel. Replaces the random tunnel URL with a real domain you can put on business cards.", tag: "cash", tagLabel: "$12" },
+      { t: "🔒 Reserve @twowheels on Instagram + TikTok", d: "5 minutes total. Grab the handle before someone else does. Future content engine needs it.", tag: "easy", tagLabel: "5 MIN" },
+
+      // ─── SCANNER + BUYER LIST ───
+      { t: "⚙️ Keep scanner running 24/7 on MacBook", d: "60-min cycle, 4-group rotation, stealth delays. Don't close the terminal. Check email for SCORE 5+ alerts daily. If FB ever flags 'moving too fast,' close the tab, reopen — protections are already in.", tag: "medium", tagLabel: "DAILY" },
+      { t: "📱 Build buyer SMS list — 25 contacts", d: "Scroll FB Messenger. Anyone who ever asked about a bike = save number. Text: 'Hey it's Aidan — I run Two Wheels in DC/VA/MD. Fresh inventory weekly. Want first dibs before bikes hit FB?' Drop the Two Wheels link.", tag: "medium", tagLabel: "2 HRS" },
+      { t: "🎯 Close first flip from a scanner email", d: "Open a SCORE 7+ scanner email, copy the suggested opener, send it yourself on FB (manual sending keeps your account safe). Negotiate, buy, flip, log in pipeline. Validates the whole system.", tag: "hard", tagLabel: "MILESTONE" },
+
+      // ─── MAC MINI + DATA ───
+      { t: "💻 Buy used Mac Mini M1 (~$400) after next $1k profit", d: "Sells from this month should clear it. Cloud hosting killed — datacenter IPs get FB-flagged. Mac Mini at home = residential IP + same logged-in FB profile + 24/7 uptime. Track on dashboard's Mac Mini Fund bar.", tag: "cash", tagLabel: "$400 GOAL" },
+      { t: "📋 Enter every past flip on /selling page", d: "Bumps Total Profit on main dashboard. Real numbers = credibility with future buyers + your business partner.", tag: "easy", tagLabel: "15 MIN" },
+      { t: "📊 Tune scanner after 1 week of running", d: "Check how many SCORE 7+ deals were actually real vs. noise. Adjust MIN_DEAL_SCORE in config.py up or down. Fewer false positives = more closes.", tag: "learn", tagLabel: "TUNE" },
+    ]
+  },
+  {
+    month: "Month 2 · NEXT — Restock + content engine",
+    num: "2",
+    theme: "REPLENISH & MARKET — Empty lot means new bikes in + first videos go up",
+    tasks: [
+      { t: "🛒 Buy 3 new flips from scanner alerts", d: "Goal: 3 fresh bikes by mid-month, $1k–3k each. Mac Mini scanning 24/7 catches deals at 2am. Focus Sur Ron / Talaria / R6-tier — proven winners with known buyer pool.", tag: "hard", tagLabel: "RESTOCK" },
+      { t: "💰 Hit 4+ flips this month — $3k–5k profit", d: "Buy → photos → list on Two Wheels → cross-post → sell. The 60-min scanner means deal flow never stops. Cash compounds.", tag: "hard", tagLabel: "GOAL" },
+      { t: "💻 Mac Mini installed + scanner migrated", d: "Pull project off GitHub on the Mini, install deps, set cronjob. Scanner now runs even when MacBook is closed/away. Verify by checking scanner.log on the Mini.", tag: "medium", tagLabel: "$0 OUT" },
+      { t: "📱 Post first TikTok / Reel on @twowheels", d: "30 sec on your next flip. Hook: 'Bought this Sur Ron for $X, sold for $Y in 48 hours.' listing_generator.py writes the caption + hashtags.", tag: "medium", tagLabel: "FIRST POST" },
+      { t: "📱 1 TikTok per flip — pickup + sold videos", d: "Every flip = content. Pickup video on the way home, sold video at handoff. AI handles captions. Free marketing, compounds monthly.", tag: "easy", tagLabel: "ONGOING" },
+      { t: "📈 50 buyer SMS contacts", d: "Double Month 1's list. Highest-converting channel — text them BEFORE listings go public.", tag: "medium", tagLabel: "ONGOING" },
+      { t: "🛒 Expand scanner radius to 150 miles", d: "Edit config.py: RADIUS_MILES = 150. Catches deals in Richmond, Philly, Annapolis — bigger pool, better picks.", tag: "easy", tagLabel: "1 MIN" },
+      { t: "🌐 Wire custom domain to Two Wheels site", d: "Point twowheelsdmv.com (or whatever you bought) at the Cloudflare tunnel via CNAME. Use that link everywhere — IG bio, FB listings, SMS blasts.", tag: "medium", tagLabel: "1 HR" },
+      { t: "📚 Read 5 motorcycle flipping articles/videos", d: "YouTube: 'motorcycle flipping for profit 2026'. Bring notes back — I update the scanner's scoring logic + analyzer prompts with what works in your specific market.", tag: "learn", tagLabel: "2 HRS" },
+    ]
+  },
+  {
+    month: "Month 3 · August",
+    num: "3",
+    theme: "HIT $8K — Scale the operation",
+    tasks: [
+      { t: "Hit $8,000 profit month", d: "8+ flips at $1k avg. The math: scanner finds → auto-msg → negotiate → buy → flip → repeat.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Hire part-time pickup helper", d: "Someone with a truck. Pay $50/pickup. You do offers + negotiation, they do transport. Frees you to do 2x flips/week.", tag: "cash", tagLabel: "$200/MO" },
+      { t: "Launch consignment service", d: "'I'll sell your bike for you, 15% cut.' Post in every DMV group. People with bikes that don't sell will come to you.", tag: "medium", tagLabel: "1 WEEK" },
+      { t: "Daily TikTok posting", d: "30 days, 30 videos. Behind the scenes, pickups, walkarounds, sold celebrations. Build the brand.", tag: "hard", tagLabel: "DAILY" },
+      { t: "100+ Instagram / TikTok followers", d: "Cross-post Reels. Engage with bike accounts. This compounds.", tag: "medium", tagLabel: "GOAL" },
+      { t: "Set up basic accounting", d: "Spreadsheet or QuickBooks. Track every $ in/out. You're a real business now — IRS cares.", tag: "medium", tagLabel: "2 HRS" },
+      { t: "Read 3 books on selling/negotiation", d: "Suggested: 'Never Split the Difference' (Chris Voss), 'Influence' (Cialdini), 'The Sales Bible' (Gitomer). I'll teach the AI new tactics from your notes.", tag: "learn", tagLabel: "LEARN" },
+      { t: "Identify 3 categories to drop", d: "Look at pipeline data — which bikes never converted? Cut them from search to focus on winners.", tag: "easy", tagLabel: "30 MIN" },
+    ]
+  },
+  {
+    month: "Month 4 · September",
+    num: "4",
+    theme: "PLATFORM PREP — Stop being a flipper, start being a marketplace",
+    tasks: [
+      { t: "Build 2wheels.com inventory page", d: "Pulls from your pipeline.json. Every 'listed' bike shows up automatically. SEO title: '[Bike] for sale in DC'. Ask Claude.", tag: "hard", tagLabel: "3 DAYS" },
+      { t: "Write 10 SEO blog posts on 2wheels.com", d: "'Best Sur Ron for sale in DC 2026', 'How to buy a used dirt bike', etc. AI writes them. Permanent Google traffic.", tag: "medium", tagLabel: "AI HELP" },
+      { t: "Recruit 2 other DC resellers to use platform", d: "Free for now. They list, you take traffic. Beachhead for the marketplace play.", tag: "hard", tagLabel: "OUTREACH" },
+      { t: "10+ flips this month, $10k+ profit", d: "You've got systems, content, helpers. Push the volume.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Add e-bike / cargo bike category", d: "Aventon, Rad, Lectric, Specialized Turbo. Hot 2026 category, high margins.", tag: "easy", tagLabel: "DONE — IN SEARCH" },
+      { t: "Build email newsletter", d: "Weekly 'New inventory drop' email to your SMS contacts + anyone who bought from you. Free, compounds.", tag: "medium", tagLabel: "MAILCHIMP" },
+      { t: "Study top US bike marketplaces", d: "Cycle Trader, Chopper Exchange, BikeBandit, Revzilla. What works? What's missing? Bring notes — we build what nobody else has.", tag: "learn", tagLabel: "LEARN · 4 HRS" },
+    ]
+  },
+  {
+    month: "Month 5 · October",
+    num: "5",
+    theme: "REGIONAL EXPANSION — Own the East Coast bike market",
+    tasks: [
+      { t: "Expand scanner to Baltimore + Richmond + Philly", d: "Add LOCATION cycling. Hits 3 cities every scan. Triples deal flow.", tag: "medium", tagLabel: "CODE" },
+      { t: "Hire second helper for second city", d: "Baltimore-based pickup person. Covers MD market while you focus DC/VA.", tag: "cash", tagLabel: "$300/MO" },
+      { t: "10+ resellers on 2wheels.com", d: "Start charging — $20/mo or 5% per closed listing. Validate revenue model.", tag: "hard", tagLabel: "GOAL · REVENUE" },
+      { t: "Run first paid ads", d: "$200 test budget. Facebook + Instagram, targeted at DMV bike communities. Measure CAC, refine.", tag: "cash", tagLabel: "$200 TEST" },
+      { t: "Hit 15+ flips/mo, $15k profit", d: "You're now genuinely a business. Time to think bigger.", tag: "hard", tagLabel: "GOAL" },
+      { t: "1,000 social followers across platforms", d: "Compounds with the content engine running.", tag: "medium", tagLabel: "GOAL" },
+      { t: "Watch 5 hours of pricing/negotiation content", d: "YouTube: 'used motorcycle negotiation', 'flipping cars on FB marketplace'. AI gets smarter with your notes.", tag: "learn", tagLabel: "LEARN" },
+    ]
+  },
+  {
+    month: "Month 6 · November",
+    num: "6",
+    theme: "SYSTEMATIZATION — Document everything, automate everything",
+    tasks: [
+      { t: "Write SOPs for every process", d: "Pickup, inspection, listing, negotiation, meetup, payment. Helpers follow scripts so quality stays high.", tag: "medium", tagLabel: "1 WEEK" },
+      { t: "Onboard 25+ resellers on 2wheels.com", d: "Word of mouth in DMV reseller scene. Each one brings inventory + buyers.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Build automated photo enhancement", d: "Drop bike photos → AI enhances/crops/removes background → ready for listing. Saves 20min/listing.", tag: "medium", tagLabel: "AI BUILD" },
+      { t: "Launch YouTube channel for Two Wheels", d: "Long-form: 'How I made $20k flipping bikes in 6 months', 'How to spot a bad Sur Ron deal'. SEO compounds.", tag: "medium", tagLabel: "WEEKLY" },
+      { t: "Hit $20k profit month", d: "Personal flips + consignment fees + marketplace cuts. Real revenue.", tag: "hard", tagLabel: "GOAL · 2.5X" },
+      { t: "Pricing dashboard v2", d: "Show: profit/category, days-to-flip/model, best buy days, best sell days. Data-driven decisions only.", tag: "medium", tagLabel: "DASHBOARD" },
+    ]
+  },
+  {
+    month: "Months 7–9 · Dec–Feb",
+    num: "7",
+    theme: "GO MULTI-STATE — The platform takes shape",
+    tasks: [
+      { t: "Expand: DC → VA → MD → NC → DE → PA", d: "Each state = scanner location + local helper + reseller network. 5x deal volume.", tag: "hard", tagLabel: "PLATFORM" },
+      { t: "100+ resellers on 2wheels.com", d: "You're now the broker. Take 5–10% on every transaction.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Hit $35k/mo combined revenue", d: "Personal flips + consignment + marketplace cuts + ad revenue.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Hire ops manager", d: "Someone runs day-to-day. You become CEO. $4–5k/mo salary, frees you to scale.", tag: "cash", tagLabel: "$5K/MO" },
+      { t: "Build mobile app (iOS first)", d: "2wheels.com but native. Push notifications when new inventory drops. Buyers stay loyal.", tag: "hard", tagLabel: "3 MONTHS" },
+      { t: "Apply for SBA loan or seed funding", d: "Real numbers in hand. Either bank financing or angel investor for inventory + expansion capital.", tag: "hard", tagLabel: "CAPITAL" },
+      { t: "First press feature", d: "Pitch local DC publications: 'How a 20-something built a $400k bike business with AI.' Free credibility.", tag: "medium", tagLabel: "PR" },
+    ]
+  },
+  {
+    month: "Months 10–12 · Mar–May",
+    num: "7",
+    theme: "USA #1 — The endgame",
+    tasks: [
+      { t: "Expand to 15+ states", d: "FL, GA, TX, CA, NY. Become THE bike marketplace people search for.", tag: "hard", tagLabel: "NATIONAL" },
+      { t: "500+ resellers on platform", d: "Network effect kicks in. More resellers = more inventory = more buyers = more resellers.", tag: "hard", tagLabel: "GOAL" },
+      { t: "$100k/mo platform revenue", d: "Transaction fees + subscriptions + ads. Now you're a real company.", tag: "hard", tagLabel: "GOAL" },
+      { t: "Build a real team (8–12 people)", d: "Engineers, ops, marketing, customer service. You hire and lead, not flip.", tag: "hard", tagLabel: "TEAM" },
+      { t: "Raise Series A ($2M+)", d: "VC funding to fuel national expansion. Use the numbers to attract real money.", tag: "cash", tagLabel: "FUNDRAISE" },
+      { t: "Acquire competitor (small marketplace)", d: "Roll-up strategy. Buy struggling local bike sites, migrate inventory to 2wheels.com.", tag: "cash", tagLabel: "M&A" },
+      { t: "Two Wheels = USA's #1 bike marketplace", d: "Year 1 goal achieved. Cycle Trader gets disrupted. Now expand to powersports, cars, RVs.", tag: "hard", tagLabel: "ENDGAME 🏁" },
+    ]
+  },
+];
+
+function render() {
+  let total = 0, done = 0;
+  let html = '';
+  const saved = JSON.parse(localStorage.getItem('tw_assignments') || '{}');
+
+  for (const [mi, m] of PLAN.entries()) {
+    let monthDone = 0;
+    const tasksHtml = m.tasks.map((t, ti) => {
+      const key = `${mi}-${ti}`;
+      const isDone = !!saved[key];
+      if (isDone) monthDone++;
+      total++; if (isDone) done++;
+      return `<div class="task ${isDone ? 'done' : ''}" onclick="toggle('${key}')">
+        <div class="checkbox"></div>
+        <div class="task-content">
+          <div class="task-title">${t.t} <span class="task-tag tag-${t.tag}">${t.tagLabel}</span></div>
+          <div class="task-desc">${t.d}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    html += `<div class="month-section">
+      <div class="month-header">
+        <div class="month-num m${Math.min(mi+1, 7)}">${mi+1}</div>
+        <div class="month-info">
+          <div class="month-name">${m.month}</div>
+          <div class="month-theme">${m.theme}</div>
+        </div>
+        <div class="month-progress">${monthDone}/${m.tasks.length}</div>
+      </div>
+      <div class="tasks">${tasksHtml}</div>
+    </div>`;
+  }
+
+  document.getElementById('months').innerHTML = html;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('totalCount').textContent = total;
+  const pct = total ? Math.round((done/total)*100) : 0;
+  document.getElementById('percentDone').textContent = pct;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggle(key) {
+  const saved = JSON.parse(localStorage.getItem('tw_assignments') || '{}');
+  saved[key] = !saved[key];
+  localStorage.setItem('tw_assignments', JSON.stringify(saved));
+  render();
+}
+
+function resetAll() {
+  if (confirm('Reset every checkbox? This cannot be undone.')) {
+    localStorage.removeItem('tw_assignments');
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

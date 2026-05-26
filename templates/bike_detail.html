@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ bike.title }} — Two Wheels</title>
+<meta name="description" content="{{ bike.title }} for sale at Two Wheels — DMV's premium motorcycle, dirt bike, and e-moto shop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #050507; color: #e8e8ed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  .garage {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      linear-gradient(180deg, transparent 0% 55%, #0c0a08 55%, #050403 100%),
+      radial-gradient(ellipse 60% 40% at 20% 8%, rgba(255,220,150,0.08), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 8%, rgba(255,220,150,0.08), transparent 60%),
+      radial-gradient(ellipse 120% 60% at 50% 35%, rgba(40,30,20,0.4), transparent 70%),
+      #050507;
+  }
+  .wrap { position: relative; z-index: 5; max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  .nav { padding: 22px 0; display: flex; justify-content: space-between; align-items: center;
+         border-bottom: 1px solid rgba(180,140,90,0.15); }
+  .brand {
+    font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px;
+    background: linear-gradient(90deg, #ffd27a 0%, #ff8a3c 50%, #ffd27a 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(255,160,60,0.3); text-decoration: none;
+  }
+  .nav-link { color: #b8b8c0; font-size: 13px; font-weight: 600; text-decoration: none;
+              letter-spacing: 0.6px; }
+  .nav-link:hover { color: #ffd27a; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #888070; font-size: 13px; text-decoration: none;
+    margin: 24px 0 8px; letter-spacing: 0.5px; font-weight: 600;
+  }
+  .back:hover { color: #ff8a3c; }
+
+  .detail {
+    display: grid; grid-template-columns: 1.4fr 1fr;
+    gap: 36px; padding: 24px 0 60px;
+  }
+  @media (max-width: 880px) {
+    .detail { grid-template-columns: 1fr; }
+  }
+
+  /* gallery */
+  .gallery { position: relative; }
+  .gallery-main {
+    aspect-ratio: 4/3; background: #0a0807;
+    border: 1px solid rgba(180,140,90,0.18); border-radius: 16px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-main .placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; gap: 8px;
+    align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, #0a0807, #0a0807 14px, #0d0a08 14px, #0d0a08 28px);
+    color: #3a3228; font-size: 12px; letter-spacing: 2px; font-weight: 600;
+  }
+  .gallery-main .placeholder b {
+    font-family: 'Bebas Neue', sans-serif; font-size: 56px;
+    color: #4a3e30; letter-spacing: 3px;
+  }
+  .gallery-thumbs {
+    display: flex; gap: 8px; margin-top: 12px; overflow-x: auto;
+  }
+  .gallery-thumbs img {
+    width: 90px; height: 70px; object-fit: cover; border-radius: 8px;
+    border: 1px solid rgba(180,140,90,0.18); cursor: pointer;
+    opacity: 0.7; transition: opacity 0.2s, border-color 0.2s;
+  }
+  .gallery-thumbs img:hover, .gallery-thumbs img.active {
+    opacity: 1; border-color: rgba(255,160,60,0.5);
+  }
+
+  /* info column */
+  .info-col h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; letter-spacing: 1px; line-height: 1.05;
+    color: #f5f0e8; margin-bottom: 14px;
+    text-shadow: 0 0 24px rgba(255,200,120,0.15);
+  }
+  .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px; color: #ff8a3c; letter-spacing: 1.5px;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .price small {
+    font-family: 'Inter', sans-serif; font-size: 13px;
+    color: #888070; font-weight: 600; letter-spacing: 0.6px;
+    text-transform: uppercase; margin-left: 8px;
+  }
+  .stage-pill {
+    display: inline-block; margin-bottom: 22px; margin-top: 4px;
+    padding: 5px 12px; border-radius: 99px;
+    font-size: 10px; font-weight: 800; letter-spacing: 1.4px;
+    background: rgba(255,138,60,0.18); color: #ffd27a;
+    border: 1px solid rgba(255,138,60,0.4);
+  }
+
+  .specs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px;
+    padding: 20px 0; margin-bottom: 22px;
+    border-top: 1px solid rgba(180,140,90,0.18);
+    border-bottom: 1px solid rgba(180,140,90,0.18);
+  }
+  .spec-lbl {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.8px;
+    color: #6a625a; margin-bottom: 4px;
+  }
+  .spec-val { font-size: 15px; color: #d8d0c4; font-weight: 700; }
+
+  .highlights {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px;
+  }
+  .highlight-pill {
+    font-size: 11px; padding: 6px 12px;
+    background: rgba(255,138,60,0.08); border: 1px solid rgba(255,138,60,0.3);
+    border-radius: 99px; color: #ffd27a;
+    text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;
+  }
+
+  .description {
+    color: #c8c0b4; font-size: 15px; line-height: 1.7;
+    margin-bottom: 28px; white-space: pre-wrap;
+  }
+
+  .actions { display: flex; flex-direction: column; gap: 10px; }
+  .btn {
+    display: block; text-align: center; padding: 14px;
+    border-radius: 11px; font-weight: 800; font-size: 13px;
+    text-decoration: none; letter-spacing: 1.4px; text-transform: uppercase;
+    cursor: pointer; border: none; font-family: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,140,60,0.4); }
+  .btn-ghost {
+    background: rgba(255,138,60,0.08); color: #ffd27a;
+    border: 1px solid rgba(255,138,60,0.35);
+  }
+  .btn-ghost:hover { background: rgba(255,138,60,0.15); }
+
+  /* inquiry form */
+  .inquiry {
+    margin-top: 40px; padding: 32px;
+    background:
+      linear-gradient(135deg, rgba(255,138,60,0.08), rgba(255,210,122,0.04)),
+      rgba(15,12,9,0.7);
+    border: 1px solid rgba(255,138,60,0.25);
+    border-radius: 18px;
+  }
+  .inquiry h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 1.5px; margin-bottom: 8px;
+    color: #f5f0e8;
+  }
+  .inquiry h2 .accent { color: #ff8a3c; }
+  .inquiry p { color: #b8b0a4; font-size: 14px; margin-bottom: 20px; }
+  .inquiry-form {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .inquiry-form input, .inquiry-form textarea {
+    padding: 12px 14px; border-radius: 10px; font-size: 14px;
+    font-family: inherit;
+    border: 1px solid rgba(180,140,90,0.22);
+    background: rgba(8,6,5,0.9); color: #e8e8ed;
+  }
+  .inquiry-form input::placeholder, .inquiry-form textarea::placeholder { color: #6a625a; }
+  .inquiry-form input:focus, .inquiry-form textarea:focus {
+    outline: none; border-color: rgba(255,160,60,0.5);
+  }
+  .inquiry-form textarea {
+    grid-column: 1 / -1; min-height: 110px; resize: vertical;
+  }
+  .inquiry-form button {
+    grid-column: 1 / -1;
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none; cursor: pointer;
+    padding: 14px; border-radius: 10px;
+    font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; font-size: 13px;
+  }
+  .inquiry-form button:hover { box-shadow: 0 8px 24px rgba(255,140,60,0.4); }
+  .inq-msg { font-size: 13px; color: #ff8a3c; margin-top: 12px; min-height: 16px; }
+
+  footer {
+    padding: 56px 0 32px; text-align: center; color: #6a625a; font-size: 12px;
+    margin-top: 60px; border-top: 1px solid rgba(180,140,90,0.15);
+  }
+  footer a { color: #a8a098; text-decoration: none; }
+  .footer-email { color: #ff8a3c; font-weight: 700; }
+
+  /* chat widget (same as homepage) */
+  .chat-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 100;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none; cursor: pointer;
+    font-size: 28px; font-weight: 900;
+    box-shadow: 0 10px 30px rgba(255,140,60,0.45);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat-btn:hover { transform: scale(1.08); }
+  .chat-btn.open { background: #222; color: #ff8a3c; }
+  .chat-panel {
+    position: fixed; bottom: 100px; right: 24px; z-index: 99;
+    width: 360px; max-width: calc(100vw - 48px); max-height: 540px;
+    background: linear-gradient(165deg, #15110d 0%, #0a0807 100%);
+    border: 1px solid rgba(255,138,60,0.35); border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .chat-panel.open { display: flex; }
+  .chat-header {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    padding: 16px 20px; color: #1a0e05;
+  }
+  .chat-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; }
+  .chat-header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .chat-body { padding: 18px 20px; flex: 1; overflow-y: auto; }
+  .chat-body p {
+    background: rgba(255,138,60,0.08); border-left: 3px solid #ff8a3c;
+    padding: 12px 14px; border-radius: 8px;
+    font-size: 13px; color: #d8d0c4; line-height: 1.55;
+  }
+  .chat-form { display: flex; flex-direction: column; gap: 8px; padding: 0 20px 20px; }
+  .chat-form input, .chat-form textarea {
+    padding: 11px 12px; border-radius: 8px;
+    border: 1px solid rgba(180,140,90,0.22);
+    background: rgba(8,6,5,0.9); color: #e8e8ed;
+    font-family: inherit; font-size: 13px;
+  }
+  .chat-form input:focus, .chat-form textarea:focus {
+    outline: none; border-color: rgba(255,160,60,0.6);
+  }
+  .chat-form textarea { min-height: 80px; resize: vertical; }
+  .chat-form button {
+    background: linear-gradient(90deg, #ff8a3c, #ffd27a);
+    color: #1a0e05; border: none; cursor: pointer;
+    padding: 12px; border-radius: 8px;
+    font-weight: 800; letter-spacing: 1px; text-transform: uppercase; font-size: 12px;
+  }
+  .chat-msg { font-size: 12px; color: #ff8a3c; min-height: 16px; padding: 0 20px 12px; }
+</style>
+</head>
+<body>
+
+<div class="garage"></div>
+
+<div class="wrap">
+  <nav class="nav">
+    <a class="brand" href="/inventory" style="text-decoration:none;">TWO WHEELS</a>
+    <a class="nav-link" href="/inventory">← All Inventory</a>
+  </nav>
+
+  <a class="back" href="/inventory">← Back to inventory</a>
+
+  <div class="detail">
+    <div class="gallery">
+      <div class="gallery-main" id="galleryMain">
+        {% if bike.photos and bike.photos|length > 0 %}
+          <img id="mainImg" src="{{ bike.photos[0] }}" alt="{{ bike.title }}">
+        {% else %}
+          <div class="placeholder">
+            <b>TW</b>
+            <span>PHOTOS COMING — ASK IN CHAT</span>
+          </div>
+        {% endif %}
+      </div>
+      {% if bike.photos and bike.photos|length > 1 %}
+      <div class="gallery-thumbs">
+        {% for p in bike.photos %}
+          <img src="{{ p }}" alt="" onclick="document.getElementById('mainImg').src=this.src; document.querySelectorAll('.gallery-thumbs img').forEach(x=>x.classList.remove('active')); this.classList.add('active');" class="{% if loop.first %}active{% endif %}">
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="info-col">
+      <h1>{{ bike.title }}</h1>
+      <div class="price">${{ "{:,}".format(bike.ask_price) }}<small>or best offer</small></div>
+      <span class="stage-pill">
+        {% if bike.stage == 'owned' %}NEW ARRIVAL{% else %}AVAILABLE NOW{% endif %}
+      </span>
+
+      <div class="specs">
+        {% if bike.year %}<div><div class="spec-lbl">Year</div><div class="spec-val">{{ bike.year }}</div></div>{% endif %}
+        {% if bike.mileage %}<div><div class="spec-lbl">Mileage</div><div class="spec-val">{{ bike.mileage }}</div></div>{% endif %}
+        {% if bike.category %}<div><div class="spec-lbl">Category</div><div class="spec-val">{{ bike.category }}</div></div>{% endif %}
+        {% if bike.title_status %}<div><div class="spec-lbl">Title</div><div class="spec-val">{{ bike.title_status }}</div></div>{% endif %}
+      </div>
+
+      {% if bike.highlights %}
+        <div class="highlights">
+          {% for h in bike.highlights %}<span class="highlight-pill">{{ h }}</span>{% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="description">{{ bike.description }}</div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="#inquire">Inquire About This Bike →</a>
+        <a class="btn btn-ghost" href="mailto:{{ contact_email }}?subject=Inquiry: {{ bike.title }}">Email {{ contact_email }}</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="inquiry" id="inquire">
+    <h2>Inquire <span class="accent">About This Bike</span></h2>
+    <p>Ask anything — test ride, trade offer, mechanic inspection, video walk-around. Goes straight to the shop owner's inbox.</p>
+    <form class="inquiry-form" onsubmit="submitInquiry(event)">
+      <input type="text" id="inqName" placeholder="Your name">
+      <input type="text" id="inqContact" placeholder="Phone or email *" required>
+      <textarea id="inqMessage" placeholder="What do you want to know? Test ride? Trade? Video?" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <div class="inq-msg" id="inqMsg"></div>
+  </section>
+
+  <footer>
+    <div style="margin-bottom:8px;font-size:13px;">Two Wheels · DC · VA · MD</div>
+    <div>Email <a class="footer-email" href="mailto:{{ contact_email }}">{{ contact_email }}</a> · <a href="#" onclick="openChat();return false;">Chat with us</a></div>
+  </footer>
+</div>
+
+<!-- Chat widget -->
+<button class="chat-btn" id="chatBtn" onclick="toggleChat()" aria-label="Open chat">💬</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <h3>Talk to Two Wheels</h3>
+    <p>About: {{ bike.title }}</p>
+  </div>
+  <div class="chat-body">
+    <p>Have a quick question? Drop it here — the shop owner gets every message directly.</p>
+  </div>
+  <form class="chat-form" onsubmit="submitChat(event)">
+    <input type="text" id="chatName" placeholder="Your name (optional)">
+    <input type="text" id="chatContact" placeholder="Phone or email *" required>
+    <textarea id="chatMessage" placeholder="Question about this {{ bike.title }}..." required></textarea>
+    <button type="submit">Send</button>
+  </form>
+  <div class="chat-msg" id="chatMsg"></div>
+</div>
+
+<script>
+const BIKE_ID = "{{ bike.id }}";
+const BIKE_TITLE = {{ bike.title|tojson }};
+
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  const btn = document.getElementById('chatBtn');
+  panel.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.textContent = panel.classList.contains('open') ? '×' : '💬';
+}
+function openChat() {
+  const panel = document.getElementById('chatPanel');
+  const btn = document.getElementById('chatBtn');
+  panel.classList.add('open'); btn.classList.add('open'); btn.textContent = '×';
+  setTimeout(() => document.getElementById('chatContact').focus(), 200);
+}
+
+async function submitInquiry(e) {
+  e.preventDefault();
+  const name = document.getElementById('inqName').value.trim();
+  const contact = document.getElementById('inqContact').value.trim();
+  const message = document.getElementById('inqMessage').value.trim();
+  const msg = document.getElementById('inqMsg');
+  if (!contact || !message) { msg.textContent='Contact + message required.'; msg.style.color='#ff8c00'; return; }
+  msg.textContent = 'Sending…'; msg.style.color='#888';
+  try {
+    const r = await fetch('/api/chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name, contact, message, bike_id: BIKE_ID, bike_title: BIKE_TITLE })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      msg.textContent = "✓ Sent. We'll get back to you fast.";
+      msg.style.color = '#ff8a3c';
+      document.getElementById('inqName').value='';
+      document.getElementById('inqContact').value='';
+      document.getElementById('inqMessage').value='';
+    } else { msg.textContent = data.error||'Something went wrong.'; msg.style.color='#ff8c00'; }
+  } catch(err) { msg.textContent = 'Network error — try again.'; msg.style.color='#ff8c00'; }
+}
+
+async function submitChat(e) {
+  e.preventDefault();
+  const name = document.getElementById('chatName').value.trim();
+  const contact = document.getElementById('chatContact').value.trim();
+  const message = document.getElementById('chatMessage').value.trim();
+  const msg = document.getElementById('chatMsg');
+  if (!contact || !message) { msg.textContent='Contact + message required.'; msg.style.color='#ff8c00'; return; }
+  msg.textContent = 'Sending…'; msg.style.color='#888';
+  try {
+    const r = await fetch('/api/chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name, contact, message, bike_id: BIKE_ID, bike_title: BIKE_TITLE })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      msg.textContent = "✓ Got it — we'll reply soon.";
+      msg.style.color = '#ff8a3c';
+      document.getElementById('chatName').value='';
+      document.getElementById('chatContact').value='';
+      document.getElementById('chatMessage').value='';
+    } else { msg.textContent = data.error||'Something went wrong.'; msg.style.color='#ff8c00'; }
+  } catch(err) { msg.textContent = 'Network error — try again.'; msg.style.color='#ff8c00'; }
+}
+</script>
+</body>
+</html>
