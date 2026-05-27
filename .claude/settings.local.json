@@ -85,7 +85,32 @@
       "Bash(/opt/homebrew/bin/gh auth *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(/opt/homebrew/bin/gh repo *)",
+      "Bash(log show *)",
+      "Bash(curl -s http://localhost:5001)",
+      "Bash(curl -s http://localhost:2000/metrics)",
+      "Bash(curl -s http://localhost:8080)",
+      "Bash(pkill -f cloudflared)",
+      "Bash(/opt/homebrew/bin/cloudflared tunnel *)",
+      "Read(//private/tmp/**)",
+      "Bash(sips -s format jpeg -Z 1600 ~/Downloads/IMG_6952.HEIC --out /Users/aidan/Desktop/fb_deal_scanner/static/bikes/ebox-1.jpg)",
+      "Bash(sips -s format jpeg -Z 1600 ~/Downloads/IMG_6953.HEIC --out /Users/aidan/Desktop/fb_deal_scanner/static/bikes/ebox-2.jpg)",
+      "Bash(sips -s format jpeg -Z 1600 ~/Downloads/IMG_6955.HEIC --out /Users/aidan/Desktop/fb_deal_scanner/static/bikes/ebox-3.jpg)",
+      "Bash(cp ~/Downloads/00F544AC-D0CE-47DD-9122-D1E6367509B3.JPG /Users/aidan/Desktop/fb_deal_scanner/static/bikes/ultrabee-1.jpg)",
+      "Bash(cp ~/Downloads/1B1C1AF1-64EE-4319-A12E-E2FAA74D76A6.JPG /Users/aidan/Desktop/fb_deal_scanner/static/bikes/ultrabee-2.jpg)",
+      "Bash(curl -s http://localhost:5001/twowheels)",
+      "Bash(curl -s http://localhost:5001/inventory)",
+      "Bash(pkill -f dashboard.py)",
+      "Bash(curl -s https://dakota-yard-madonna-establish.trycloudflare.com/inventory)",
+      "Bash(kill 99191)",
+      "Bash(curl -s -o /dev/null -w \"localhost:5001/ → %{http_code}\\\\n\" http://localhost:5001/)",
+      "Bash(curl -s -o /dev/null -w \"localhost:5001/inventory → %{http_code}\\\\n\" http://localhost:5001/inventory)",
+      "Bash(curl -s -o /dev/null -w \"tunnel/ → %{http_code}\\\\n\" https://dakota-yard-madonna-establish.trycloudflare.com/)",
+      "Bash(curl -s -o /dev/null -w \"tunnel/inventory → %{http_code}\\\\n\" https://dakota-yard-madonna-establish.trycloudflare.com/inventory)",
+      "Bash(curl -s -o /dev/null -w '  __TRACKED_VAR__/         → %{http_code}\\\\n' __TRACKED_VAR__/)",
+      "Bash(curl -s -o /dev/null -w '  __TRACKED_VAR__/inventory → %{http_code}\\\\n' __TRACKED_VAR__/inventory)",
+      "Bash(curl -s __TRACKED_VAR__/inventory)"
     ]
   }
 }

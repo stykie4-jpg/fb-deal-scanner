@@ -282,7 +282,7 @@ def _forward_email(subject: str, html_body: str) -> bool:
 @app.route("/inventory")
 def public_inventory():
     pipe = r("pipeline.json") or []
-    in_stock = [d for d in pipe if d.get("stage") in ("listed", "owned")]
+    in_stock = [d for d in pipe if d.get("stage") in ("listed", "owned", "consignment")]
     sold = sorted(
         [d for d in pipe if d.get("stage") == "sold"],
         key=lambda x: x.get("updated", ""),

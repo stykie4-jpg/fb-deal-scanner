@@ -1,5 +1,63 @@
 [
   {
+    "id": "ebox-v2-2025",
+    "title": "2025 Ebox V2",
+    "stage": "consignment",
+    "buy_price": 0,
+    "ask_price": 1400,
+    "commission": 140,
+    "notes": "CONSIGNMENT — 10% cut = $140. Owner asking $1,400. Mostly stock. Camo graphics, purple grips, LED light bar, upgraded foot pegs. 3 photos live.",
+    "updated": "2026-05-26",
+    "description": "2025 Ebox V2 electric dirt bike — mostly stock and ready to ride. Only 100 miles. Camo graphics wrap, purple aftermarket grips, LED light bar up front, and upgraded diamond-plate foot pegs. Battery charges full, all electronics work. Clean, no drops, no damage. These run on silence and torque — more fun than they look on paper, and way cheaper than a Sur Ron for what you get. Title in hand. Cash, Zelle, or trade.",
+    "year": 2025,
+    "mileage": "100 mi",
+    "category": "E-Moto",
+    "title_status": "Clean",
+    "highlights": ["Camo graphics", "LED light bar", "Upgraded pegs", "Purple grips", "Clean title", "Trades OK"],
+    "photos": [
+      "/static/bikes/ebox-1.jpg",
+      "/static/bikes/ebox-2.jpg",
+      "/static/bikes/ebox-3.jpg"
+    ],
+    "listings": {
+      "facebook": "",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "",
+      "reddit": "",
+      "other": ""
+    }
+  },
+  {
+    "id": "surron-ultrabee-2025",
+    "title": "2025 Sur Ron Ultra Bee",
+    "stage": "consignment",
+    "buy_price": 0,
+    "ask_price": 5800,
+    "commission": 580,
+    "notes": "CONSIGNMENT — 10% cut = $580. Owner asking $5,800. 800 miles, no problems. Gold forks, clean black body. 4 photos live including Nationals Park shot.",
+    "updated": "2026-05-26",
+    "description": "2025 Sur Ron Ultra Bee — the big brother of the LBX, more power, more range, more bike. 800 miles, zero issues. Battery holds full charge, all electronics 100%, runs strong every time. Gold USD forks, clean black plastics, no drops, no repairs, nothing to fix. This is the most capable Sur Ron in the lineup and it's priced to move fast. Charger and key included. Title in hand. Cash, Zelle, or trade for the right bike.",
+    "year": 2025,
+    "mileage": "800 mi",
+    "category": "E-Moto",
+    "title_status": "Clean",
+    "highlights": ["Ultra Bee", "800 mi", "Gold USD forks", "No issues", "Full charge", "Clean title"],
+    "photos": [
+      "/static/bikes/ultrabee-1.jpg",
+      "/static/bikes/ultrabee-2.jpg",
+      "/static/bikes/ultrabee-3.jpg",
+      "/static/bikes/ultrabee-4.jpg"
+    ],
+    "listings": {
+      "facebook": "",
+      "offerup": "",
+      "craigslist": "",
+      "instagram": "",
+      "other": ""
+    }
+  },
+  {
     "id": "surron-lbx-2024",
     "title": "2024 Sur Ron Light Bee X",
     "stage": "listed",

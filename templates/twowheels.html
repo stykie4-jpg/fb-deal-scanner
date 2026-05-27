@@ -32,24 +32,34 @@
   .hero-bg {
     position: absolute; inset: 0; z-index: 0;
     background-image:
-      linear-gradient(180deg, rgba(5,5,7,0.55) 0%, rgba(5,5,7,0.35) 35%, rgba(5,5,7,0.85) 90%, #050507 100%),
+      linear-gradient(180deg,
+        rgba(5,5,7,0.45) 0%,
+        rgba(5,5,7,0.15) 30%,
+        rgba(5,5,7,0.60) 75%,
+        #050507 100%),
       url('/static/garage-hero.jpg');
     background-size: cover;
-    background-position: center;
-    background-color: #0a0807;
-    animation: slow-zoom 30s ease-in-out infinite alternate;
+    background-position: center 40%;
+    background-color: #080608;
+    animation: slow-zoom 40s ease-in-out infinite alternate;
+    filter: saturate(0.85) contrast(1.08);
   }
   @keyframes slow-zoom {
     0%   { transform: scale(1.0); }
-    100% { transform: scale(1.06); }
+    100% { transform: scale(1.04); }
   }
-  /* warm ambient light bleed */
-  .hero-bg::after {
-    content: ''; position: absolute; inset: 0;
+  /* cinematic color grade + grain to kill the AI-perfect look */
+  .hero-bg::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
     background:
-      radial-gradient(ellipse 70% 50% at 50% 10%, rgba(255,180,90,0.18), transparent 60%),
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,0,0,0.55), transparent 70%);
-    pointer-events: none;
+      radial-gradient(ellipse 120% 60% at 15% 60%, rgba(30,60,180,0.12), transparent 55%),
+      radial-gradient(ellipse 120% 60% at 85% 60%, rgba(180,30,30,0.10), transparent 55%);
+    pointer-events: none; mix-blend-mode: screen;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0; z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35; pointer-events: none; mix-blend-mode: overlay;
   }
 
   /* nav over hero */
@@ -219,12 +229,13 @@
     gap: 26px;
   }
   .bike-card {
-    background: linear-gradient(165deg, rgba(20,16,12,0.95) 0%, rgba(10,8,6,0.95) 100%);
-    border: 1px solid rgba(180,140,90,0.18);
-    border-radius: 16px; overflow: hidden;
+    background: #0e0b09;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; overflow: hidden;
     transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     position: relative;
     text-decoration: none; color: inherit; display: block;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
   }
   .bike-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -453,7 +464,7 @@
 
   <div class="nav-wrap">
     <div class="nav-inner">
-      <a class="brand" href="/inventory">TWO WHEELS</a>
+      <a class="brand" href="/inventory">TWO WHEEL DEALS</a>
       <div class="nav-links">
         <a class="nav-link" href="#inventory">Inventory</a>
         <a class="nav-link" href="#alerts">Alerts</a>
@@ -504,7 +515,7 @@
             <div class="placeholder"><b>TW</b><span>PHOTOS COMING</span></div>
           {% endif %}
           <div class="stage-tag">
-            {% if b.stage == 'owned' %}NEW ARRIVAL{% else %}AVAILABLE{% endif %}
+            {% if b.stage == 'consignment' %}CONSIGNMENT{% elif b.stage == 'owned' %}NEW ARRIVAL{% else %}AVAILABLE{% endif %}
           </div>
         </div>
         <div class="bike-info">
@@ -538,15 +549,6 @@
     <div class="lead-msg" id="leadMsg"></div>
   </section>
 
-  {% if recent_sold %}
-  <h2 class="section-title">Recently <span class="accent">Sold</span></h2>
-  <p class="section-sub">A taste of what moves through the shop.</p>
-  <div class="sold-wall">
-    {% for s in recent_sold %}
-      <span class="sold-chip">{{ s.title }} <b>${{ "{:,}".format(s.sold_price) }}</b></span>
-    {% endfor %}
-  </div>
-  {% endif %}
 
   <footer>
     <div style="margin-bottom:8px;font-size:13px;">

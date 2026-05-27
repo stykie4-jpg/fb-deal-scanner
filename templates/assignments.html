@@ -119,49 +119,67 @@
 <script>
 const PLAN = [
   {
-    month: "Month 1 · NOW — Close the $15k on the lot",
+    month: "Month 1 · NOW — Close the lot + launch the brand",
     num: "1",
-    theme: "CASH FIRST — Convert every bike sitting on the lot into Zelle before chasing new deals",
+    theme: "CASH FIRST + BRAND LAUNCH — Sell every bike on the lot AND launch Two Wheels publicly this week",
     tasks: [
-      // ─── HIGHEST CASH IMPACT FIRST ───
-      { t: "💰 SELL Sur Ron LBX 2024 — $3,500", d: "Already listed on FB. Photos now live on Two Wheels site. Cross-post to FB DMV emoto groups, OfferUp ($5 fee), eBay Motors. Send every FB inquiry the /bike/surron-lbx-2024 link — looks 10x more professional than a FB listing. Drop $200 if no bites in 48hrs.", tag: "hard", tagLabel: "$3,500" },
-      { t: "💰 SELL R6 2005 — $4,800", d: "NOT YET LISTED anywhere. Photos live on Two Wheels. List TODAY on FB Marketplace + Cycle Trader (#1 sportbike buyer pool) + OfferUp. Spring/summer = peak sportbike season. This is the highest-margin bike on the lot right now.", tag: "hard", tagLabel: "$4,800" },
-      { t: "💰 LIST Razor Stage 2 M2 — $3,900", d: "NOT YET LISTED. Premium 72V build with Deore brakes + Fast Ace forks = top-shelf emoto. FB Marketplace + FB DMV emoto groups + OfferUp + eBay Motors. Photos live on Two Wheels. Highest ticket emoto in DMV — price it confidently.", tag: "hard", tagLabel: "$3,900" },
-      { t: "🛠 Install brakes + pegs on Talaria MX4", d: "~$200 in parts. Without it, Talaria is a $3,000 bike. With it, $3,400 ask holds. Same weekend, both jobs. Then list it.", tag: "hard", tagLabel: "UNLOCKS $3,400" },
-      { t: "📸 Shoot 5 Talaria photos (after install)", d: "Same outdoor setup as Sur Ron / Razor. 5 angles minimum. AirDrop to Downloads, save into static/bikes/ as talaria-1.jpg → talaria-5.jpg, then tell me. Powers the Two Wheels listing.", tag: "easy", tagLabel: "30 MIN" },
-      { t: "💰 LIST + SELL Talaria MX4 — $3,400", d: "After brakes/pegs/photos done. FB + emoto groups + OfferUp. Moves fast — cheapest emoto on the lot.", tag: "hard", tagLabel: "$3,400" },
+      // ─── SELL THE LOT ───
+      { t: "💰 SELL Sur Ron LBX 2024 — $3,500", d: "Already listed on FB. Send every inquiry the /bike/surron-lbx-2024 link — looks like a real dealership. Cross-post to FB DMV emoto groups + OfferUp. Drop $200 if no bites in 48hrs. LBX market is saturated — move it fast.", tag: "hard", tagLabel: "$3,500" },
+      { t: "💰 LIST + SELL R6 2005 — $4,800", d: "NOT YET LISTED. Highest margin bike on the lot. List TODAY: FB Marketplace + Cycle Trader + OfferUp. Peak sportbike season right now. Photos live on Two Wheels site — send the link to every inquiry.", tag: "hard", tagLabel: "$4,800" },
+      { t: "💰 LIST Razor Stage 2 M2 — $3,900", d: "NOT YET LISTED. Premium 72V, Deore brakes, Fast Ace forks. FB + emoto groups + OfferUp + eBay Motors. Photos live on site. Price it confidently — this is a top-shelf build.", tag: "hard", tagLabel: "$3,900" },
+      { t: "🛠 Install brakes + pegs on Talaria MX4", d: "~$200 in parts unlocks the $3,400 ask. Without it you're at $3,000. Do both same day, then list immediately.", tag: "medium", tagLabel: "UNLOCKS $400" },
+      { t: "📸 Shoot 5 Talaria photos after install", d: "Outdoor daylight, 5 angles. AirDrop → Downloads → rename talaria-1.jpg through talaria-5.jpg → drop in static/bikes/ → tell Claude. Listing goes live same day.", tag: "easy", tagLabel: "30 MIN" },
+      { t: "💰 LIST + SELL Talaria MX4 — $3,400", d: "After brakes/pegs/photos. FB + emoto groups + OfferUp. Fastest mover on the lot once listed.", tag: "hard", tagLabel: "$3,400" },
 
-      // ─── TWO WHEELS SITE — TURN VISITORS INTO BUYERS ───
-      { t: "🏠 Drop garage-hero.jpg into static/", d: "Find a high-quality photo of a real garage filled with dirt bikes / motorcycles / e-motos (Google 'motorcycle dealership interior' or 'moto garage'). This is the homepage hero background — without it the site looks bare.", tag: "easy", tagLabel: "15 MIN" },
-      { t: "📤 Send Two Wheels link to every FB buyer", d: "When someone DMs about a bike, send the /bike/<id> page. Real photo gallery, real description, chat widget — looks like a real shop. Tunnel link: lucia-habits-wave-wisconsin.trycloudflare.com", tag: "easy", tagLabel: "USE TODAY" },
-      { t: "🌐 Buy twowheelsdmv.com or 2wheels.com domain", d: "Namecheap / Cloudflare, ~$12/yr. Point it at the Cloudflare tunnel. Replaces the random tunnel URL with a real domain you can put on business cards.", tag: "cash", tagLabel: "$12" },
-      { t: "🔒 Reserve @twowheels on Instagram + TikTok", d: "5 minutes total. Grab the handle before someone else does. Future content engine needs it.", tag: "easy", tagLabel: "5 MIN" },
+      // ─── SOCIAL MEDIA BLOWUP — THIS WEEK ───
+      { t: "📱 Post all 4 bikes as IG Reels TODAY", d: "One reel per bike — 15-30 sec walkround, price in the caption, link in bio to Two Wheels site. You already have 1,000+ followers watching bike content. These 4 posts alone should bring 3-5 inquiries.", tag: "easy", tagLabel: "2 HRS" },
+      { t: "🎵 Create @twowheelsdmv TikTok + post first video", d: "Download TikTok, grab the handle, post the first video today. Walk through all 4 bikes: 'Here's what's on the lot, link in bio.' No editing needed. Raw works. TikTok algo pushes bike content hard.", tag: "easy", tagLabel: "TODAY" },
+      { t: "🎥 Film 'What's on the lot' YouTube video", d: "3 min walkthrough of all 4 bikes. Title: 'DMV Bikes For Sale — Sur Ron, R6, Razor Stage 2 [May 2026]'. Description has website link. Searchable forever — passive buyer traffic.", tag: "medium", tagLabel: "45 MIN" },
+      { t: "📤 Send Two Wheels link to every FB inquiry", d: "Stop just replying with a price. Send the /bike/<id> page. It looks like a real shop — photo gallery, full description, chat widget. Converts way better than a FB thread.", tag: "easy", tagLabel: "ALWAYS" },
 
-      // ─── SCANNER + BUYER LIST ───
-      { t: "⚙️ Keep scanner running 24/7 on MacBook", d: "60-min cycle, 4-group rotation, stealth delays. Don't close the terminal. Check email for SCORE 5+ alerts daily. If FB ever flags 'moving too fast,' close the tab, reopen — protections are already in.", tag: "medium", tagLabel: "DAILY" },
-      { t: "📱 Build buyer SMS list — 25 contacts", d: "Scroll FB Messenger. Anyone who ever asked about a bike = save number. Text: 'Hey it's Aidan — I run Two Wheels in DC/VA/MD. Fresh inventory weekly. Want first dibs before bikes hit FB?' Drop the Two Wheels link.", tag: "medium", tagLabel: "2 HRS" },
-      { t: "🎯 Close first flip from a scanner email", d: "Open a SCORE 7+ scanner email, copy the suggested opener, send it yourself on FB (manual sending keeps your account safe). Negotiate, buy, flip, log in pipeline. Validates the whole system.", tag: "hard", tagLabel: "MILESTONE" },
+      // ─── CONSIGNMENT — SIGN FIRST 10 CLIENTS ───
+      { t: "📩 DM 20 followers who own bikes with the consignment pitch", d: "Message: 'Saw you're trying to sell your [bike] — I handle everything at Two Wheels DMV. Professional listing, photos, negotiations, sold. You get 90%, I take 10%. DM me.' You already have 2 signed — get to 10.", tag: "medium", tagLabel: "2 HRS" },
+      { t: "📣 Post consignment story on IG every week", d: "'Got a bike you can't sell? Stop dealing with lowball DMs and no-shows. I sell it for you — you get 90%. DM me.' Post this every Monday. Compounds every week.", tag: "easy", tagLabel: "5 MIN/WK" },
+      { t: "🏗 Build 'List Your Bike' page on Two Wheels site", d: "Consignment intake form — name, bike details, asking price, phone. You get the lead, call them same day. Tell Claude to build this and it'll be done in 20 minutes.", tag: "easy", tagLabel: "ASK CLAUDE" },
+      { t: "🏆 Build 'Sold' gallery on Two Wheels site", d: "Show every bike you've flipped with the profit number. 'KLX300 — sold in 3 days, $900 profit.' Nothing signs a consignment client faster than seeing proof. Tell Claude to build it.", tag: "easy", tagLabel: "ASK CLAUDE" },
 
-      // ─── MAC MINI + DATA ───
-      { t: "💻 Buy used Mac Mini M1 (~$400) after next $1k profit", d: "Sells from this month should clear it. Cloud hosting killed — datacenter IPs get FB-flagged. Mac Mini at home = residential IP + same logged-in FB profile + 24/7 uptime. Track on dashboard's Mac Mini Fund bar.", tag: "cash", tagLabel: "$400 GOAL" },
-      { t: "📋 Enter every past flip on /selling page", d: "Bumps Total Profit on main dashboard. Real numbers = credibility with future buyers + your business partner.", tag: "easy", tagLabel: "15 MIN" },
-      { t: "📊 Tune scanner after 1 week of running", d: "Check how many SCORE 7+ deals were actually real vs. noise. Adjust MIN_DEAL_SCORE in config.py up or down. Fewer false positives = more closes.", tag: "learn", tagLabel: "TUNE" },
+      // ─── WEBSITE + DOMAIN ───
+      { t: "🏠 Drop garage-hero.jpg into static/", d: "Google 'motorcycle dealership interior high quality' — grab a stunning photo, save to static/garage-hero.jpg. Homepage hero needs this to look professional.", tag: "easy", tagLabel: "15 MIN" },
+      { t: "🌐 Buy twowheelsdmv.com domain", d: "Namecheap or Cloudflare, ~$12/yr. Point it at the tunnel URL. Real domain on IG bio, FB listings, business cards.", tag: "cash", tagLabel: "$12" },
+      { t: "🔒 Reserve @twowheelsdmv on IG + TikTok", d: "5 minutes. Grab it before someone else does.", tag: "easy", tagLabel: "5 MIN" },
+
+      // ─── SCANNER + OPS ───
+      { t: "⚙️ Keep scanner running 24/7", d: "Don't close the terminal. 60-min cycle, residential IP, stealth delays. Check email daily for score 7+ alerts. This is your unfair advantage — it scans while you sleep.", tag: "medium", tagLabel: "DAILY" },
+      { t: "📱 Build SMS buyer list — 25 contacts", d: "Everyone who ever DM'd about a bike = save their number. Text: 'Hey it's Aidan from Two Wheels DMV — fresh inventory weekly, want first dibs before FB?' They say yes, you text them before every listing.", tag: "medium", tagLabel: "2 HRS" },
+      { t: "🎯 Close first scanner flip", d: "Open a score 7+ email, copy the opener, send it manually on FB. Negotiate, buy, flip, log it. The scanner pays for itself on the first deal.", tag: "hard", tagLabel: "MILESTONE" },
+      { t: "💻 Buy Mac Mini M1 after first $1k scanner profit", d: "~$400 used. Runs scanner 24/7 even when MacBook is away. Residential IP = FB doesn't flag it. Pull project from GitHub, set it up, scanner runs forever.", tag: "cash", tagLabel: "$400 GOAL" },
+      { t: "📋 Enter every past flip on /selling page", d: "Bumps the Total Profit counter. Real track record = trust with consignment clients.", tag: "easy", tagLabel: "15 MIN" },
     ]
   },
   {
-    month: "Month 2 · NEXT — Restock + content engine",
+    month: "Month 2 · NEXT — Restock + content engine + consignment scale",
     num: "2",
-    theme: "REPLENISH & MARKET — Empty lot means new bikes in + first videos go up",
+    theme: "REPLENISH + GROW — 5x/week content, 10 consignment clients, new flips from scanner",
     tasks: [
-      { t: "🛒 Buy 3 new flips from scanner alerts", d: "Goal: 3 fresh bikes by mid-month, $1k–3k each. Mac Mini scanning 24/7 catches deals at 2am. Focus Sur Ron / Talaria / R6-tier — proven winners with known buyer pool.", tag: "hard", tagLabel: "RESTOCK" },
-      { t: "💰 Hit 4+ flips this month — $3k–5k profit", d: "Buy → photos → list on Two Wheels → cross-post → sell. The 60-min scanner means deal flow never stops. Cash compounds.", tag: "hard", tagLabel: "GOAL" },
-      { t: "💻 Mac Mini installed + scanner migrated", d: "Pull project off GitHub on the Mini, install deps, set cronjob. Scanner now runs even when MacBook is closed/away. Verify by checking scanner.log on the Mini.", tag: "medium", tagLabel: "$0 OUT" },
-      { t: "📱 Post first TikTok / Reel on @twowheels", d: "30 sec on your next flip. Hook: 'Bought this Sur Ron for $X, sold for $Y in 48 hours.' listing_generator.py writes the caption + hashtags.", tag: "medium", tagLabel: "FIRST POST" },
-      { t: "📱 1 TikTok per flip — pickup + sold videos", d: "Every flip = content. Pickup video on the way home, sold video at handoff. AI handles captions. Free marketing, compounds monthly.", tag: "easy", tagLabel: "ONGOING" },
-      { t: "📈 50 buyer SMS contacts", d: "Double Month 1's list. Highest-converting channel — text them BEFORE listings go public.", tag: "medium", tagLabel: "ONGOING" },
-      { t: "🛒 Expand scanner radius to 150 miles", d: "Edit config.py: RADIUS_MILES = 150. Catches deals in Richmond, Philly, Annapolis — bigger pool, better picks.", tag: "easy", tagLabel: "1 MIN" },
-      { t: "🌐 Wire custom domain to Two Wheels site", d: "Point twowheelsdmv.com (or whatever you bought) at the Cloudflare tunnel via CNAME. Use that link everywhere — IG bio, FB listings, SMS blasts.", tag: "medium", tagLabel: "1 HR" },
-      { t: "📚 Read 5 motorcycle flipping articles/videos", d: "YouTube: 'motorcycle flipping for profit 2026'. Bring notes back — I update the scanner's scoring logic + analyzer prompts with what works in your specific market.", tag: "learn", tagLabel: "2 HRS" },
+      // ─── RESTOCK ───
+      { t: "🛒 Buy 3 new flips from scanner", d: "Mac Mini scanning 24/7. Focus: dirt bikes (YZ250F, CRF250R), Sur Ron Storm Bee, anything 30%+ under market. $1k-3k each. Cash from Month 1 sales funds this.", tag: "hard", tagLabel: "RESTOCK" },
+      { t: "💰 Hit 4+ flips — $4k-6k profit", d: "Scanner finds → you message → negotiate → buy → photos → Two Wheels listing → cross-post → sell. Repeat.", tag: "hard", tagLabel: "GOAL" },
+
+      // ─── SOCIAL MEDIA ───
+      { t: "📱 TikTok 5x per week — use the content formula", d: "Mon: bike reveal (new listing). Tue: flip breakdown ('bought for $X, sold for $Y'). Wed: wheelie/riding content. Thu: buyer/seller handoff. Fri: 'should you buy this?' model review. Every video ends with 'link in bio — Two Wheels DMV'.", tag: "hard", tagLabel: "DAILY" },
+      { t: "📱 Cross-post every TikTok to IG Reels + YouTube Shorts", d: "One video, three platforms, 3x the reach. Takes 2 extra minutes. IG and YouTube are already warm — TikTok finds new people.", tag: "easy", tagLabel: "2 MIN/VIDEO" },
+      { t: "📧 Add email capture to Two Wheels site", d: "'Get notified when new bikes drop' — simple email box. 200 warm buyer emails = bikes sell same day you list them. Tell Claude to add it.", tag: "easy", tagLabel: "ASK CLAUDE" },
+
+      // ─── CONSIGNMENT ───
+      { t: "📩 Sign 10 total consignment clients", d: "Keep DMing followers + post the consignment story every Monday. You already have 2. Get to 10 this month — that's potentially $300-$600/mo in commissions with zero capital.", tag: "medium", tagLabel: "10 CLIENTS" },
+      { t: "📣 Weekly consignment IG story — every Monday", d: "'Got a bike you can't move? I handle everything — you get 90%. DM me.' Post it every Monday without fail.", tag: "easy", tagLabel: "WEEKLY" },
+      { t: "🤝 Track all consignment bikes in pipeline.json", d: "Add consignment bikes to your pipeline as a new stage. Tell Claude to add a 'consignment' stage to the dashboard.", tag: "easy", tagLabel: "ASK CLAUDE" },
+
+      // ─── OPS ───
+      { t: "💻 Mac Mini running 24/7", d: "Pull from GitHub, install deps, scanner runs as a background process. No more leaving MacBook open.", tag: "medium", tagLabel: "SET UP" },
+      { t: "📈 50 SMS buyer contacts", d: "Double the list. Text everyone new inventory before it hits FB. Buyers on your list = bikes gone in hours.", tag: "medium", tagLabel: "GOAL" },
+      { t: "🌐 Wire domain to Two Wheels site", d: "twowheelsdmv.com → Cloudflare tunnel → live. Use this link everywhere from now on.", tag: "medium", tagLabel: "1 HR" },
+      { t: "📚 Watch 5 flip/negotiation videos on YouTube", d: "'motorcycle flipping profit 2026', 'how to negotiate used motorcycle price'. Bring back tactics and tell Claude — scanner prompts get updated.", tag: "learn", tagLabel: "2 HRS" },
     ]
   },
   {
